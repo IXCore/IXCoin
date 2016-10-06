@@ -5,6 +5,9 @@ src/bitcoin
 src/bitcoind
 src/bitcoin-cli
 src/bitcoin-tx
+src/ixcoind
+src/ixcoin-cli
+src/ixcoin-tx
 src/test/test_bitcoin
 src/qt/test/test_bitcoin-qt
 
