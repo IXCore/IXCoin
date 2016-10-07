@@ -59,8 +59,6 @@ struct Params {
     bool fPowAllowMinDifficultyBlocks;
     bool fPowNoRetargeting;
     int64_t nPowTargetSpacing;
-    int64_t nPowTargetTimespan;
-    int64_t DifficultyAdjustmentInterval() const { return nPowTargetTimespan / nPowTargetSpacing; }
     /** Auxpow parameters */
     int32_t nAuxpowChainId;
     int nAuxpowStartHeight;
@@ -77,6 +75,29 @@ struct Params {
         if (nLegacyBlocksBefore < 0)
             return true;
         return static_cast<int> (nHeight) < nLegacyBlocksBefore;
+    }
+
+    /**
+     * Check for "revised iXcoin" difficulty adjustment parameters.
+     */
+    bool RevisedIxcoin(unsigned nHeight) const
+    {
+        return nHeight > 20055;
+    }
+
+    /**
+     * Return pow target timespan for given height.
+     */
+    int64_t PowTargetTimespan(unsigned nHeight) const
+    {
+        if (RevisedIxcoin (nHeight))
+            return 24 * 60 * 60;
+        return 14 * 24 * 60 * 60;
+    }
+
+    int64_t DifficultyAdjustmentInterval(unsigned nHeight) const
+    {
+        return PowTargetTimespan (nHeight) / nPowTargetSpacing;
     }
 };
 } // namespace Consensus
