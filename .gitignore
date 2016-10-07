@@ -78,6 +78,7 @@ src/qt/test/moc*.cpp
 *.qm
 Makefile
 bitcoin-qt
+ixcoin-qt
 Bitcoin-Qt.app
 
 # Unit-tests
