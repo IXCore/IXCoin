@@ -2004,6 +2004,20 @@ bool CheckTxInputs(const CTransaction& tx, CValidationState& state, const CCoins
             const CCoins *coins = inputs.AccessCoins(prevout.hash);
             assert(coins);
 
+            // Lock the coinbases of the first 6,050 blocks.  This removes
+            // the premine that is present in iXcoin.
+            if (coins->nHeight <= 6050 && coins->IsCoinBase()) {
+              if (nSpendHeight > 250000) {
+                return state.Invalid(false,
+                    REJECT_INVALID, "blocked-premine-spent",
+                    strprintf("tried to spend blocked premine of depth %d at height %d",
+                              coins->nHeight, nSpendHeight));
+              } else {
+                LogPrintf("WARNING: blocked premine of depth %d spent at height %d\n", 
+                          coins->nHeight, nSpendHeight);
+              }
+            }
+
             // If prev is coinbase, check that it's matured
             if (coins->IsCoinBase()) {
                 if (nSpendHeight - coins->nHeight < COINBASE_MATURITY)
