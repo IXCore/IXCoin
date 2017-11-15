@@ -334,9 +334,12 @@ public:
     //! Retrieve the block hash whose state this CCoinsView currently represents
     virtual uint256 GetBestBlock() const;
 
+    //! The amount of coins in the mining fund.
+    virtual CAmount GetMiningFund() const;
+
     //! Do a bulk modification (multiple CCoins changes + BestBlock change).
     //! The passed mapCoins can be modified.
-    virtual bool BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock);
+    virtual bool BatchWrite(CCoinsMap &mapCoins, CAmount miningFund, const uint256 &hashBlock);
 
     //! Get a cursor to iterate over the whole state
     virtual CCoinsViewCursor *Cursor() const;
@@ -357,8 +360,9 @@ public:
     bool GetCoins(const uint256 &txid, CCoins &coins) const;
     bool HaveCoins(const uint256 &txid) const;
     uint256 GetBestBlock() const;
+    CAmount GetMiningFund() const;
     void SetBackend(CCoinsView &viewIn);
-    bool BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock);
+    bool BatchWrite(CCoinsMap &mapCoins, CAmount miningFund, const uint256 &hashBlock);
     CCoinsViewCursor *Cursor() const;
 };
 
@@ -398,6 +402,7 @@ protected:
      * declared as "const".  
      */
     mutable uint256 hashBlock;
+    mutable CAmount miningFund;
     mutable CCoinsMap cacheCoins;
 
     /* Cached dynamic memory usage for the inner CCoins objects. */
@@ -411,8 +416,10 @@ public:
     bool GetCoins(const uint256 &txid, CCoins &coins) const;
     bool HaveCoins(const uint256 &txid) const;
     uint256 GetBestBlock() const;
+    CAmount GetMiningFund() const;
     void SetBestBlock(const uint256 &hashBlock);
-    bool BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock);
+    void SetMiningFund(CAmount miningFundIn);
+    bool BatchWrite(CCoinsMap &mapCoins, CAmount miningFundIn, const uint256 &hashBlock);
 
     /**
      * Check if we have the given tx already loaded in this cache.

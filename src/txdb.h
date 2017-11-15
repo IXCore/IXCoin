@@ -72,7 +72,8 @@ public:
     bool GetCoins(const uint256 &txid, CCoins &coins) const;
     bool HaveCoins(const uint256 &txid) const;
     uint256 GetBestBlock() const;
-    bool BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock);
+    CAmount GetMiningFund() const;
+    bool BatchWrite(CCoinsMap &mapCoins, CAmount miningFund, const uint256 &hashBlock);
     CCoinsViewCursor *Cursor() const;
 };
 
