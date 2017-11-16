@@ -1308,6 +1308,20 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
                 pcoinscatcher = new CCoinsViewErrorCatcher(pcoinsdbview);
                 pcoinsTip = new CCoinsViewCache(pcoinscatcher);
 
+                // Initialise the mining fund flag if necessary.  If we have
+                // a completely fresh chainstate, then we set it to the premine
+                // amount.  Otherwise, if we are still missing the mining fund,
+                // this is an old datadir and we have to reindex.
+                if (pcoinsTip->GetMiningFund() < 0) {
+                  if (!pcoinsTip->GetBestBlock().IsNull()) {
+                    strLoadError = _("The data directory does not contain"
+                                     " mining fund information.");
+                    break;
+                  }
+                  pcoinsTip->SetMiningFund(chainparams.GetConsensus().initialMiningFund);
+                }
+                assert(pcoinsTip->GetMiningFund() >= 0);
+
                 if (fReindex) {
                     pblocktree->WriteReindexing(true);
                     //If we're reindexing in prune mode, wipe away unusable block files and all undo data files

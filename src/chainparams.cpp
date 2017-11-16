@@ -103,6 +103,10 @@ public:
         consensus.fStrictChainId = true;
         consensus.nLegacyBlocksBefore = 45000;
 
+        // Corresponds to the block rewards of the initial 6050 blocks, which
+        // are the premine.
+        consensus.initialMiningFund = 580800 * COIN;
+
         /**
          * The message start string is designed to be unlikely to occur in normal data.
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
@@ -192,6 +196,8 @@ public:
         consensus.fStrictChainId = false;
         consensus.nLegacyBlocksBefore = -1;
 
+        consensus.initialMiningFund = 0 * COIN;
+
         pchMessageStart[0] = 0x0b;
         pchMessageStart[1] = 0x11;
         pchMessageStart[2] = 0x09;
@@ -271,6 +277,9 @@ public:
         consensus.nAuxpowChainId = 0x0001;
         consensus.fStrictChainId = true;
         consensus.nLegacyBlocksBefore = 0;
+
+        // Set some non-zero amount for testing.
+        consensus.initialMiningFund = 10 * COIN;
 
         pchMessageStart[0] = 0xfa;
         pchMessageStart[1] = 0xbf;

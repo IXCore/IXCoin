@@ -6,6 +6,7 @@
 #ifndef BITCOIN_CONSENSUS_PARAMS_H
 #define BITCOIN_CONSENSUS_PARAMS_H
 
+#include "amount.h"
 #include "uint256.h"
 #include <map>
 #include <string>
@@ -66,6 +67,10 @@ struct Params {
     int nAuxpowStartHeight;
     bool fStrictChainId;
     int nLegacyBlocksBefore; // -1 for "always allow"
+
+    // The initial amount in the mining fund, which corresponds to the premine
+    // on mainnet that is recycled for later block rewards.
+    CAmount initialMiningFund;
 
     /**
      * Check whether or not to allow legacy blocks at the given height.
