@@ -1315,12 +1315,14 @@ bool AppInit2(boost::thread_group& threadGroup, CScheduler& scheduler)
                 if (pcoinsTip->GetMiningFund() < 0) {
                   if (!pcoinsTip->GetBestBlock().IsNull()) {
                     strLoadError = _("The data directory does not contain"
-                                     " mining fund information.");
+                                     " mining fund information.  You need to"
+                                     " -reindex.");
                     break;
                   }
                   pcoinsTip->SetMiningFund(chainparams.GetConsensus().initialMiningFund);
                 }
                 assert(pcoinsTip->GetMiningFund() >= 0);
+                assert(pcoinsTip->Flush());
 
                 if (fReindex) {
                     pblocktree->WriteReindexing(true);

@@ -73,12 +73,14 @@ class CBlockUndo
 {
 public:
     std::vector<CTxUndo> vtxundo; // for all but the coinbase
+    CAmount nMiningFundIncrease;
 
     ADD_SERIALIZE_METHODS;
 
     template <typename Stream, typename Operation>
     inline void SerializationOp(Stream& s, Operation ser_action, int nType, int nVersion) {
         READWRITE(vtxundo);
+        READWRITE(nMiningFundIncrease);
     }
 };
 

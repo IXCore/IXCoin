@@ -2274,6 +2274,11 @@ bool DisconnectBlock(const CBlock& block, CValidationState& state, const CBlockI
         }
     }
 
+    // Update mining fund.
+    assert(view.GetMiningFund() >= 0);
+    view.SetMiningFund(view.GetMiningFund() - blockUndo.nMiningFundIncrease);
+    assert(view.GetMiningFund() >= 0);
+
     // move best block pointer to prevout block
     view.SetBestBlock(pindex->pprev->GetBlockHash());
 
@@ -2481,6 +2486,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
     std::vector<uint256> vOrphanErase;
     std::vector<int> prevheights;
     CAmount nFees = 0;
+    CAmount nMiningFundIncrease = 0;
     int nInputs = 0;
     int64_t nSigOpsCost = 0;
     CDiskTxPos pos(pindex->GetBlockPos(), GetSizeOfCompactSize(block.vtx.size()));
@@ -2548,6 +2554,13 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
             control.Add(vChecks);
         }
 
+        // Sum up mining fund contributions of this tx.
+        for (const auto& txo : tx.vout) {
+          if (txo.scriptPubKey.IsUnspendable()) {
+            nMiningFundIncrease += txo.nValue;
+          }
+        }
+
         CTxUndo undoDummy;
         if (i > 0) {
             blockundo.vtxundo.push_back(CTxUndo());
@@ -2574,6 +2587,24 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
 
     if (fJustCheck)
         return true;
+
+    // Update the mining fund info in the chainstate.  Since we do this after
+    // checking the block reward, funding transactions in the current block
+    // are not yet available.  This also simplifies the code, as we only have
+    // to do a single update both for the increase from this block's funding
+    // transactions and for the decrease from rewards used up by this block's
+    // reward for the miner.
+    //
+    // The asserts protect against two things:  First, they ensure that we
+    // already have a valid mining fund info; thus, they protect against a bug
+    // in the chainstate initialisation and using the "default" -1 as a valid
+    // value.  Second, they also ensure that we don't have a bug in the logic
+    // that verifies the block reward, so that we have another safety net
+    // against creating more coins than allowed.
+    assert(view.GetMiningFund() >= 0);
+    view.SetMiningFund(view.GetMiningFund() + nMiningFundIncrease);
+    assert(view.GetMiningFund() >= 0);
+    blockundo.nMiningFundIncrease = nMiningFundIncrease;
 
     // Write undo information to disk
     if (pindex->GetUndoPos().IsNull() || !pindex->IsValid(BLOCK_VALID_SCRIPTS))
