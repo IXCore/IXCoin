@@ -47,6 +47,8 @@ struct Params {
     int BIP65Height;
     /** Block height at which BIP66 becomes active */
     int BIP66Height;
+    /** Block height at which regular block rewards are set to zero.  */
+    int ZeroBlockRewardHeight;
     /** Block height at which the mining fund is introduced.  */
     int MiningFundHeight;
     /**

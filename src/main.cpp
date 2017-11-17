@@ -1758,7 +1758,7 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
     nSubsidy >>= halvings;
 
     // Hard limit to 21M Ixcoins
-    if (nHeight >= 227499)
+    if (nHeight >= consensusParams.ZeroBlockRewardHeight)
         nSubsidy = 0;
 
     return nSubsidy;
