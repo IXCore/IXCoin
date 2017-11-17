@@ -1764,6 +1764,16 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
     return nSubsidy;
 }
 
+// Returns the (maximum) additional block reward a miner is allowed to take
+// from the mining fund for the current state.
+CAmount GetMiningFundSubsidy(const int nHeight, const CCoinsView& coins,
+                             const Consensus::Params& consensusParams)
+{
+  if (nHeight < consensusParams.MiningFundHeight)
+    return 0;
+  return std::min(coins.GetMiningFund(), COIN);
+}
+
 bool IsInitialBlockDownload()
 {
     const CChainParams& chainParams = Params();
@@ -2573,12 +2583,19 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
     int64_t nTime3 = GetTimeMicros(); nTimeConnect += nTime3 - nTime2;
     LogPrint("bench", "      - Connect %u transactions: %.2fms (%.3fms/tx, %.3fms/txin) [%.2fs]\n", (unsigned)block.vtx.size(), 0.001 * (nTime3 - nTime2), 0.001 * (nTime3 - nTime2) / block.vtx.size(), nInputs <= 1 ? 0 : 0.001 * (nTime3 - nTime2) / (nInputs-1), nTimeConnect * 0.000001);
 
-    CAmount blockReward = nFees + GetBlockSubsidy(pindex->nHeight, chainparams.GetConsensus());
-    if (block.vtx[0].GetValueOut() > blockReward)
+    const CAmount blockReward = nFees + GetBlockSubsidy(pindex->nHeight, chainparams.GetConsensus());
+    const CAmount maxFundSubsidy = GetMiningFundSubsidy(pindex->nHeight, view, chainparams.GetConsensus());
+    const CAmount fundUsage = block.vtx[0].GetValueOut() - blockReward;
+    if (fundUsage > maxFundSubsidy)
         return state.DoS(100,
                          error("ConnectBlock(): coinbase pays too much (actual=%d vs limit=%d)",
-                               block.vtx[0].GetValueOut(), blockReward),
+                               block.vtx[0].GetValueOut(),
+                               blockReward + maxFundSubsidy),
                                REJECT_INVALID, "bad-cb-amount");
+    if (fundUsage > 0)
+      nMiningFundIncrease -= fundUsage;
+    // fundUsage might also be negative, if the miner paid less than possible
+    // to herself.  In this case, we just let it be.
 
     if (!control.Wait())
         return state.DoS(100, false);
