@@ -73,12 +73,11 @@ public:
         strNetworkID = "main";
         consensus.nSubsidyHalvingInterval = 210000;
         // FIXME: Update once we fix the fork.
-        consensus.BIP34Height = 1000000;
-        consensus.BIP34Hash = uint256S("0x000000000000024b89b42a942fe0d9fea3bb44ab7bd1b19115dd6a759c0808b8");
-        consensus.BIP65Height = 1000000;
-        consensus.BIP66Height = 1000000;
+        consensus.BIP34Height = 416050;
+        consensus.BIP65Height = 416050;
+        consensus.BIP66Height = 416050;
         consensus.ZeroBlockRewardHeight = 227499;
-        consensus.MiningFundHeight = 1000000;
+        consensus.MiningFundHeight = 416050;
         consensus.powLimit = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetSpacing = 10 * 60;
         consensus.fPowAllowMinDifficultyBlocks = false;
@@ -168,7 +167,6 @@ public:
         strNetworkID = "test";
         consensus.nSubsidyHalvingInterval = 210000;
         consensus.BIP34Height = 21111;
-        consensus.BIP34Hash = uint256S("0x0000000023b3a96d3484e5abb3755c413e7d41500f8e2a5c3f0dd01299cd8ef8");
         consensus.BIP65Height = 581885; // 00000000007f6655f22f98e72ed80d8b06dc761d5da09df0fa1dc4be4f861eb6
         consensus.BIP66Height = 330776; // 000000002104c8c45e99a8853285a3b592602a3ccde2b832481da85e9e4ba182
         consensus.ZeroBlockRewardHeight = 227499;
@@ -255,7 +253,6 @@ public:
         strNetworkID = "regtest";
         consensus.nSubsidyHalvingInterval = 150;
         consensus.BIP34Height = 100000000; // BIP34 has not activated on regtest (far in the future so block v1 are not rejected in tests)
-        consensus.BIP34Hash = uint256();
         consensus.BIP65Height = 1351; // BIP65 activated on regtest (Used in rpc activation tests)
         consensus.BIP66Height = 1251; // BIP66 activated on regtest (Used in rpc activation tests)
         consensus.ZeroBlockRewardHeight = 200;
