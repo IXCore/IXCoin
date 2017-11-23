@@ -1054,7 +1054,7 @@ bool CheckTransaction(const CTransaction& tx, CValidationState &state)
     if (tx.vout.empty())
         return state.DoS(10, false, REJECT_INVALID, "bad-txns-vout-empty");
     // Size limits (this doesn't take the witness into account, as that hasn't been checked for malleability)
-    if (::GetSerializeSize(tx, SER_NETWORK, PROTOCOL_VERSION | SERIALIZE_TRANSACTION_NO_WITNESS) > MAX_BLOCK_BASE_SIZE)
+    if (::GetSerializeSize(tx, SER_NETWORK, PROTOCOL_VERSION | SERIALIZE_TRANSACTION_NO_WITNESS) > MAX_TX_BASE_SIZE)
         return state.DoS(100, false, REJECT_INVALID, "bad-txns-oversize");
 
     // Check for negative or overflow output values
@@ -1758,10 +1758,20 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
     nSubsidy >>= halvings;
 
     // Hard limit to 21M Ixcoins
-    if (nHeight >= 227499)
+    if (nHeight >= consensusParams.ZeroBlockRewardHeight)
         nSubsidy = 0;
 
     return nSubsidy;
+}
+
+// Returns the (maximum) additional block reward a miner is allowed to take
+// from the mining fund for the current state.
+CAmount GetMiningFundSubsidy(const int nHeight, const CCoinsView& coins,
+                             const Consensus::Params& consensusParams)
+{
+  if (nHeight < consensusParams.MiningFundHeight)
+    return 0;
+  return std::min(coins.GetMiningFund(), COIN);
 }
 
 bool IsInitialBlockDownload()
@@ -2274,6 +2284,11 @@ bool DisconnectBlock(const CBlock& block, CValidationState& state, const CBlockI
         }
     }
 
+    // Update mining fund.
+    assert(view.GetMiningFund() >= 0);
+    view.SetMiningFund(view.GetMiningFund() - blockUndo.nMiningFundIncrease);
+    assert(view.GetMiningFund() >= 0);
+
     // move best block pointer to prevout block
     view.SetBestBlock(pindex->pprev->GetBlockHash());
 
@@ -2429,7 +2444,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
     // If we're on the known chain at height greater than where BIP34 activated, we can save the db accesses needed for the BIP30 check.
     CBlockIndex *pindexBIP34height = pindex->pprev->GetAncestor(chainparams.GetConsensus().BIP34Height);
     //Only continue to enforce if we're below BIP34 activation height or the block hash at that height doesn't correspond.
-    fEnforceBIP30 = fEnforceBIP30 && (!pindexBIP34height || !(pindexBIP34height->GetBlockHash() == chainparams.GetConsensus().BIP34Hash));
+    fEnforceBIP30 = fEnforceBIP30 && !pindexBIP34height;
 
     if (fEnforceBIP30) {
         BOOST_FOREACH(const CTransaction& tx, block.vtx) {
@@ -2481,6 +2496,7 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
     std::vector<uint256> vOrphanErase;
     std::vector<int> prevheights;
     CAmount nFees = 0;
+    CAmount nMiningFundIncrease = 0;
     int nInputs = 0;
     int64_t nSigOpsCost = 0;
     CDiskTxPos pos(pindex->GetBlockPos(), GetSizeOfCompactSize(block.vtx.size()));
@@ -2548,6 +2564,13 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
             control.Add(vChecks);
         }
 
+        // Sum up mining fund contributions of this tx.
+        for (const auto& txo : tx.vout) {
+          if (txo.scriptPubKey.IsUnspendable()) {
+            nMiningFundIncrease += txo.nValue;
+          }
+        }
+
         CTxUndo undoDummy;
         if (i > 0) {
             blockundo.vtxundo.push_back(CTxUndo());
@@ -2560,12 +2583,19 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
     int64_t nTime3 = GetTimeMicros(); nTimeConnect += nTime3 - nTime2;
     LogPrint("bench", "      - Connect %u transactions: %.2fms (%.3fms/tx, %.3fms/txin) [%.2fs]\n", (unsigned)block.vtx.size(), 0.001 * (nTime3 - nTime2), 0.001 * (nTime3 - nTime2) / block.vtx.size(), nInputs <= 1 ? 0 : 0.001 * (nTime3 - nTime2) / (nInputs-1), nTimeConnect * 0.000001);
 
-    CAmount blockReward = nFees + GetBlockSubsidy(pindex->nHeight, chainparams.GetConsensus());
-    if (block.vtx[0].GetValueOut() > blockReward)
+    const CAmount blockReward = nFees + GetBlockSubsidy(pindex->nHeight, chainparams.GetConsensus());
+    const CAmount maxFundSubsidy = GetMiningFundSubsidy(pindex->nHeight, view, chainparams.GetConsensus());
+    const CAmount fundUsage = block.vtx[0].GetValueOut() - blockReward;
+    if (fundUsage > maxFundSubsidy)
         return state.DoS(100,
                          error("ConnectBlock(): coinbase pays too much (actual=%d vs limit=%d)",
-                               block.vtx[0].GetValueOut(), blockReward),
+                               block.vtx[0].GetValueOut(),
+                               blockReward + maxFundSubsidy),
                                REJECT_INVALID, "bad-cb-amount");
+    if (fundUsage > 0)
+      nMiningFundIncrease -= fundUsage;
+    // fundUsage might also be negative, if the miner paid less than possible
+    // to herself.  In this case, we just let it be.
 
     if (!control.Wait())
         return state.DoS(100, false);
@@ -2574,6 +2604,24 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
 
     if (fJustCheck)
         return true;
+
+    // Update the mining fund info in the chainstate.  Since we do this after
+    // checking the block reward, funding transactions in the current block
+    // are not yet available.  This also simplifies the code, as we only have
+    // to do a single update both for the increase from this block's funding
+    // transactions and for the decrease from rewards used up by this block's
+    // reward for the miner.
+    //
+    // The asserts protect against two things:  First, they ensure that we
+    // already have a valid mining fund info; thus, they protect against a bug
+    // in the chainstate initialisation and using the "default" -1 as a valid
+    // value.  Second, they also ensure that we don't have a bug in the logic
+    // that verifies the block reward, so that we have another safety net
+    // against creating more coins than allowed.
+    assert(view.GetMiningFund() >= 0);
+    view.SetMiningFund(view.GetMiningFund() + nMiningFundIncrease);
+    assert(view.GetMiningFund() >= 0);
+    blockundo.nMiningFundIncrease = nMiningFundIncrease;
 
     // Write undo information to disk
     if (pindex->GetUndoPos().IsNull() || !pindex->IsValid(BLOCK_VALID_SCRIPTS))
@@ -3625,6 +3673,11 @@ bool ContextualCheckBlockHeader(const CBlockHeader& block, CValidationState& sta
 bool ContextualCheckBlock(const CBlock& block, CValidationState& state, const Consensus::Params& consensusParams, const CBlockIndex* pindexPrev)
 {
     const int nHeight = pindexPrev == NULL ? 0 : pindexPrev->nHeight + 1;
+
+    // Verify the smaller block size limit (1M) prior to forking.
+    // FIXME: Can be removed once the chain is beyond the fork point.
+    if (nHeight < consensusParams.MiningFundHeight && ::GetSerializeSize(block, SER_NETWORK, PROTOCOL_VERSION | SERIALIZE_TRANSACTION_NO_WITNESS) > 1000000)
+        return state.DoS(100, false, REJECT_INVALID, "bad-blk-length", false, "size limits failed");
 
     // Start enforcing BIP113 (Median Time Past) using versionbits logic.
     int nLockTimeFlags = 0;

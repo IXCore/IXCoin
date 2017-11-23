@@ -22,6 +22,7 @@ static const char DB_TXINDEX = 't';
 static const char DB_BLOCK_INDEX = 'b';
 
 static const char DB_BEST_BLOCK = 'B';
+static const char DB_MINING_FUND = 'M';
 static const char DB_FLAG = 'F';
 static const char DB_REINDEX_FLAG = 'R';
 static const char DB_LAST_BLOCK = 'l';
@@ -46,7 +47,14 @@ uint256 CCoinsViewDB::GetBestBlock() const {
     return hashBestChain;
 }
 
-bool CCoinsViewDB::BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock) {
+CAmount CCoinsViewDB::GetMiningFund() const {
+  CAmount miningFund;
+  if (!db.Read(DB_MINING_FUND, miningFund))
+    return -1;
+  return miningFund;
+}
+
+bool CCoinsViewDB::BatchWrite(CCoinsMap &mapCoins, const CAmount miningFund, const uint256 &hashBlock) {
     CDBBatch batch(db);
     size_t count = 0;
     size_t changed = 0;
@@ -64,6 +72,8 @@ bool CCoinsViewDB::BatchWrite(CCoinsMap &mapCoins, const uint256 &hashBlock) {
     }
     if (!hashBlock.IsNull())
         batch.Write(DB_BEST_BLOCK, hashBlock);
+    if (miningFund >= 0)
+        batch.Write(DB_MINING_FUND, miningFund);
 
     LogPrint("coindb", "Committing %u changed transactions (out of %u) to coin database...\n", (unsigned int)changed, (unsigned int)count);
     return db.WriteBatch(batch);

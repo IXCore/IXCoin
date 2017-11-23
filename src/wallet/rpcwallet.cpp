@@ -335,7 +335,7 @@ UniValue getaddressesbyaccount(const UniValue& params, bool fHelp)
     return ret;
 }
 
-static void SendMoney(const CTxDestination &address, CAmount nValue, bool fSubtractFeeFromAmount, CWalletTx& wtxNew)
+static void SendMoneyToScript(const CScript &scriptPubKey, CAmount nValue, bool fSubtractFeeFromAmount, CWalletTx& wtxNew)
 {
     CAmount curBalance = pwalletMain->GetBalance();
 
@@ -348,9 +348,6 @@ static void SendMoney(const CTxDestination &address, CAmount nValue, bool fSubtr
 
     if (pwalletMain->GetBroadcastTransactions() && !g_connman)
         throw JSONRPCError(RPC_CLIENT_P2P_DISABLED, "Error: Peer-to-peer functionality missing or disabled");
-
-    // Parse Bitcoin address
-    CScript scriptPubKey = GetScriptForDestination(address);
 
     // Create and send the transaction
     CReserveKey reservekey(pwalletMain);
@@ -367,6 +364,11 @@ static void SendMoney(const CTxDestination &address, CAmount nValue, bool fSubtr
     }
     if (!pwalletMain->CommitTransaction(wtxNew, reservekey, g_connman.get()))
         throw JSONRPCError(RPC_WALLET_ERROR, "Error: The transaction was rejected! This might happen if some of the coins in your wallet were already spent, such as if you used a copy of the wallet and coins were spent in the copy but not marked as spent here.");
+}
+
+static void SendMoney(const CTxDestination &address, CAmount nValue, bool fSubtractFeeFromAmount, CWalletTx& wtxNew)
+{
+    SendMoneyToScript(GetScriptForDestination(address), nValue, fSubtractFeeFromAmount, wtxNew);
 }
 
 UniValue sendtoaddress(const UniValue& params, bool fHelp)
@@ -2568,6 +2570,40 @@ UniValue fundrawtransaction(const UniValue& params, bool fHelp)
     return result;
 }
 
+UniValue fundmining(const UniValue& params, bool fHelp)
+{
+    if (!EnsureWalletIsAvailable(fHelp))
+        return NullUniValue;
+
+    if (fHelp || params.size() != 1)
+        throw runtime_error(
+            "fundmining amount\n"
+            "\nSend an amount to the mining fund.\n"
+            + HelpRequiringPassphrase() +
+            "\nArguments:\n"
+            "1. \"amount\"      (numeric or string, required) The amount in " + CURRENCY_UNIT + " to send. eg 0.1\n"
+            "\nResult:\n"
+            "\"transactionid\"  (string) The transaction id.\n"
+            "\nExamples:\n"
+            + HelpExampleCli("fundmining", "0.1")
+            + HelpExampleRpc("fundmining", "0.1")
+        );
+
+    LOCK2(cs_main, pwalletMain->cs_wallet);
+
+    // Amount
+    CAmount nAmount = AmountFromValue(params[0]);
+    if (nAmount <= 0)
+        throw JSONRPCError(RPC_TYPE_ERROR, "Invalid amount for send");
+
+    EnsureWalletIsUnlocked();
+
+    CWalletTx wtx;
+    SendMoneyToScript(CScript() << OP_RETURN, nAmount, false, wtx);
+
+    return wtx.GetHash().GetHex();
+}
+
 extern UniValue dumpprivkey(const UniValue& params, bool fHelp); // in rpcdump.cpp
 extern UniValue importprivkey(const UniValue& params, bool fHelp);
 extern UniValue importaddress(const UniValue& params, bool fHelp);
@@ -2626,6 +2662,8 @@ static const CRPCCommand commands[] =
     { "wallet",             "walletpassphrasechange",   &walletpassphrasechange,   true  },
     { "wallet",             "walletpassphrase",         &walletpassphrase,         true  },
     { "wallet",             "removeprunedfunds",        &removeprunedfunds,        true  },
+
+    { "wallet",             "fundmining",               &fundmining,               false },
 };
 
 void RegisterWalletRPCCommands(CRPCTable &t)

@@ -6,6 +6,7 @@
 #ifndef BITCOIN_CONSENSUS_PARAMS_H
 #define BITCOIN_CONSENSUS_PARAMS_H
 
+#include "amount.h"
 #include "uint256.h"
 #include <map>
 #include <string>
@@ -39,13 +40,16 @@ struct BIP9Deployment {
 struct Params {
     uint256 hashGenesisBlock;
     int nSubsidyHalvingInterval;
-    /** Block height and hash at which BIP34 becomes active */
+    /** Block height at which BIP34 becomes active */
     int BIP34Height;
-    uint256 BIP34Hash;
     /** Block height at which BIP65 becomes active */
     int BIP65Height;
     /** Block height at which BIP66 becomes active */
     int BIP66Height;
+    /** Block height at which regular block rewards are set to zero.  */
+    int ZeroBlockRewardHeight;
+    /** Block height at which the mining fund is introduced.  */
+    int MiningFundHeight;
     /**
      * Minimum blocks including miner confirmation of the total of 2016 blocks in a retargetting period,
      * (nPowTargetTimespan / nPowTargetSpacing) which is also used for BIP9 deployments.
@@ -64,6 +68,10 @@ struct Params {
     int nAuxpowStartHeight;
     bool fStrictChainId;
     int nLegacyBlocksBefore; // -1 for "always allow"
+
+    // The initial amount in the mining fund, which corresponds to the premine
+    // on mainnet that is recycled for later block rewards.
+    CAmount initialMiningFund;
 
     /**
      * Check whether or not to allow legacy blocks at the given height.
