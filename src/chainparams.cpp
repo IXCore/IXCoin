@@ -73,11 +73,11 @@ public:
         strNetworkID = "main";
         consensus.nSubsidyHalvingInterval = 210000;
         // FIXME: Update once we fix the fork.
-        consensus.BIP34Height = 416050;
-        consensus.BIP65Height = 416050;
-        consensus.BIP66Height = 416050;
+        consensus.BIP34Height = 450000;
+        consensus.BIP65Height = 450000;
+        consensus.BIP66Height = 450000;
         consensus.ZeroBlockRewardHeight = 227499;
-        consensus.MiningFundHeight = 416050;
+        consensus.MiningFundHeight = 450000;
         consensus.powLimit = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetSpacing = 10 * 60;
         consensus.fPowAllowMinDifficultyBlocks = false;
