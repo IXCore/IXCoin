@@ -491,7 +491,7 @@ std::string HelpMessage(HelpMessageMode mode)
 
 std::string LicenseInfo()
 {
-    const std::string URL_SOURCE_CODE = "<https://github.com/domob1812/ixcoin>";
+    const std::string URL_SOURCE_CODE = "<https://github.com/ixcore/ixcoin>";
     const std::string URL_WEBSITE = "<https://ixcoin.info>";
 
     return CopyrightHolders(strprintf(_("Copyright (C) %i-%i"), 2009, COPYRIGHT_YEAR) + " ") + "\n" +
