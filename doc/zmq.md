@@ -1,4 +1,4 @@
-# Block and Transaction Broadcasting With ZeroMQ
+# Block and Transaction Broadcasting with ZeroMQ
 
 [ZeroMQ](http://zeromq.org/) is a lightweight wrapper around TCP
 connections, inter-process communication, and shared-memory,
@@ -50,7 +50,7 @@ during the *configure* step of building bitcoind:
     $ ./configure --disable-zmq (other options)
 
 To actually enable operation, one must set the appropriate options on
-the commandline or in the configuration file.
+the command line or in the configuration file.
 
 ## Usage
 
@@ -72,7 +72,7 @@ For instance:
 Each PUB notification has a topic and body, where the header
 corresponds to the notification type. For instance, for the
 notification `-zmqpubhashtx` the topic is `hashtx` (no null
-terminator) and the body is the hexadecimal transaction hash (32
+terminator) and the body is the transaction hash (32
 bytes).
 
 These options can also be provided in bitcoin.conf.
