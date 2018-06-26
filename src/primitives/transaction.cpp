@@ -1,13 +1,14 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2015 The Bitcoin Core developers
+// Copyright (c) 2009-2017 The Bitcoin Core developers
+// Copyright (c) 2011-2018 The Ixcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#include "primitives/transaction.h"
+#include <primitives/transaction.h>
 
-#include "hash.h"
-#include "tinyformat.h"
-#include "utilstrencodings.h"
+#include <hash.h>
+#include <tinyformat.h>
+#include <utilstrencodings.h>
 
 std::string COutPoint::ToString() const
 {
@@ -74,6 +75,9 @@ void CTransaction::UpdateHash() const
 
 uint256 CTransaction::GetWitnessHash() const
 {
+    if (!HasWitness()) {
+        return GetHash();
+    }
     return SerializeHash(*this, SER_GETHASH, 0);
 }
 
