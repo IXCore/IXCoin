@@ -1,17 +1,49 @@
-<TS language="fr_CA" version="2.1">
+<TS language="es_419" version="2.1">
 <context>
     <name>AddressBookPage</name>
     <message>
+        <source>Right-click to edit address or label</source>
+        <translation>Haga clic para editar la dirección o etiqueta</translation>
+    </message>
+    <message>
         <source>Create a new address</source>
-        <translation>Créer une nouvelle adresse</translation>
+        <translation>Crear una nueva dirección</translation>
+    </message>
+    <message>
+        <source>&amp;New</source>
+        <translation>&amp;New</translation>
     </message>
     <message>
         <source>Copy the currently selected address to the system clipboard</source>
-        <translation>Copier l'adresse surligné a votre presse-papier</translation>
+        <translation>Copia la dirección seleccionada al portapapeles del sistema</translation>
     </message>
     <message>
-        <source>&amp;Delete</source>
-        <translation>&amp;Supprimer</translation>
+        <source>Delete the currently selected address from the list</source>
+        <translation>Borrar la dirección que esta seleccionada en la lista</translation>
+    </message>
+    <message>
+        <source>Export the data in the current tab to a file</source>
+        <translation>Exportar los datos de la actual tabla hacia un archivo</translation>
+    </message>
+    <message>
+        <source>Choose the address to send coins to</source>
+        <translation>Seleccione la dirección a la que enviará las monedas</translation>
+    </message>
+    <message>
+        <source>Choose the address to receive coins with</source>
+        <translation>Seleccione la dirección con la que recibirá las monedas</translation>
+    </message>
+    <message>
+        <source>Sending addresses</source>
+        <translation>Enviando direcciones</translation>
+    </message>
+    <message>
+        <source>Receiving addresses</source>
+        <translation>Recibiendo direcciones</translation>
+    </message>
+    <message>
+        <source>These are your Ixcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
+        <translation>Estas son sus direcciones de Ixcoin para enviar sus pagos. Siempre revise el monto y la dirección recibida antes de enviar monedas.</translation>
     </message>
     </context>
 <context>
@@ -19,18 +51,6 @@
     </context>
 <context>
     <name>AskPassphraseDialog</name>
-    <message>
-        <source>Enter passphrase</source>
-        <translation>Entrer Mot de Passe</translation>
-    </message>
-    <message>
-        <source>New passphrase</source>
-        <translation>Nouveau Mot de passe</translation>
-    </message>
-    <message>
-        <source>Repeat new passphrase</source>
-        <translation>Répéter Mot de Passe</translation>
-    </message>
     </context>
 <context>
     <name>BanTableModel</name>
@@ -40,21 +60,9 @@
     </context>
 <context>
     <name>CoinControlDialog</name>
-    <message>
-        <source>(un)select all</source>
-        <translation>Toute sélectionner </translation>
-    </message>
     </context>
 <context>
     <name>EditAddressDialog</name>
-    <message>
-        <source>&amp;Label</source>
-        <translation>Record</translation>
-    </message>
-    <message>
-        <source>&amp;Address</source>
-        <translation>Addresse</translation>
-    </message>
     </context>
 <context>
     <name>FreespaceChecker</name>
@@ -64,10 +72,6 @@
     </context>
 <context>
     <name>Intro</name>
-    <message>
-        <source>Welcome</source>
-        <translation>Bienvenue </translation>
-    </message>
     </context>
 <context>
     <name>ModalOverlay</name>
@@ -137,33 +141,9 @@
     </context>
 <context>
     <name>TransactionTableModel</name>
-    <message>
-        <source>Label</source>
-        <translation>Record</translation>
-    </message>
-    <message>
-        <source>(no label)</source>
-        <translation>(pas de record)</translation>
-    </message>
     </context>
 <context>
     <name>TransactionView</name>
-    <message>
-        <source>Copy address</source>
-        <translation>copier l'adresse </translation>
-    </message>
-    <message>
-        <source>Comma separated file (*.csv)</source>
-        <translation>Fichier séparé par une virgule (*.csv)</translation>
-    </message>
-    <message>
-        <source>Label</source>
-        <translation>Record</translation>
-    </message>
-    <message>
-        <source>Address</source>
-        <translation>Addresse</translation>
-    </message>
     </context>
 <context>
     <name>UnitDisplayStatusBarControl</name>
@@ -176,6 +156,10 @@
     </context>
 <context>
     <name>WalletView</name>
+    <message>
+        <source>Export the data in the current tab to a file</source>
+        <translation>Exportar los datos de la actual tabla hacia un archivo</translation>
+    </message>
     </context>
 <context>
     <name>ixcoin-core</name>

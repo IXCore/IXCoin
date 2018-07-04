@@ -26,6 +26,14 @@
         <translation>Cerrar</translation>
     </message>
     <message>
+        <source>Delete the currently selected address from the list</source>
+        <translation>Eliminar la dirección seleccionada de la lista</translation>
+    </message>
+    <message>
+        <source>Export the data in the current tab to a file</source>
+        <translation>Exportar los datos en la pestaña actual a un archivo</translation>
+    </message>
+    <message>
         <source>&amp;Export</source>
         <translation>Exportar</translation>
     </message>
@@ -33,7 +41,10 @@
         <source>&amp;Delete</source>
         <translation>&amp;Borrar</translation>
     </message>
-</context>
+    </context>
+<context>
+    <name>AddressTableModel</name>
+    </context>
 <context>
     <name>AskPassphraseDialog</name>
     <message>
@@ -48,7 +59,7 @@
         <source>Repeat new passphrase</source>
         <translation>Repetir nueva contraseña</translation>
     </message>
-</context>
+    </context>
 <context>
     <name>BanTableModel</name>
     </context>
@@ -107,16 +118,16 @@
         <translation>Recibiendo direcciones</translation>
     </message>
     <message>
-        <source>Send coins to a Bitcoin address</source>
-        <translation>Enviar monedas a una dirección Bitcoin</translation>
+        <source>Send coins to a Ixcoin address</source>
+        <translation>Enviar monedas a una dirección Ixcoin</translation>
     </message>
     <message>
         <source>Change the passphrase used for wallet encryption</source>
         <translation>Cambie la clave utilizada para el cifrado del monedero</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Ixcoin</source>
+        <translation>Ixcoin</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -189,7 +200,7 @@
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
         <translation>El Monedero esta &lt;b&gt;cifrado&lt;/b&gt; y actualmente &lt;b&gt;bloqueado&lt;/b&gt;</translation>
     </message>
-</context>
+    </context>
 <context>
     <name>CoinControlDialog</name>
     <message>
@@ -205,10 +216,6 @@
         <translation>AMonto:</translation>
     </message>
     <message>
-        <source>Priority:</source>
-        <translation>Prioridad:</translation>
-    </message>
-    <message>
         <source>Change:</source>
         <translation>Cambio:</translation>
     </message>
@@ -220,11 +227,7 @@
         <source>Confirmed</source>
         <translation>Confirmado</translation>
     </message>
-    <message>
-        <source>Priority</source>
-        <translation>Prioridad</translation>
-    </message>
-</context>
+    </context>
 <context>
     <name>EditAddressDialog</name>
     <message>
@@ -239,7 +242,7 @@
         <source>&amp;Address</source>
         <translation>&amp;Direccion </translation>
     </message>
-</context>
+    </context>
 <context>
     <name>FreespaceChecker</name>
     </context>
@@ -249,8 +252,19 @@
 <context>
     <name>Intro</name>
     <message>
+        <source>Ixcoin</source>
+        <translation>Ixcoin</translation>
+    </message>
+    <message>
         <source>Error</source>
         <translation>Error</translation>
+    </message>
+    </context>
+<context>
+    <name>ModalOverlay</name>
+    <message>
+        <source>Form</source>
+        <translation>Formulario</translation>
     </message>
     </context>
 <context>
@@ -263,8 +277,16 @@
         <translation>Opciones</translation>
     </message>
     <message>
+        <source>Size of &amp;database cache</source>
+        <translation>Tamaño del cache de la &amp;base de datos</translation>
+    </message>
+    <message>
         <source>W&amp;allet</source>
         <translation>Billetera</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>Error</translation>
     </message>
     </context>
 <context>
@@ -275,10 +297,23 @@
     </message>
     </context>
 <context>
+    <name>PaymentServer</name>
+    </context>
+<context>
     <name>PeerTableModel</name>
     </context>
 <context>
     <name>QObject</name>
+    <message>
+        <source>unknown</source>
+        <translation>desconocido</translation>
+    </message>
+</context>
+<context>
+    <name>QObject::QObject</name>
+    </context>
+<context>
+    <name>QRImageWidget</name>
     </context>
 <context>
     <name>RPCConsole</name>
@@ -302,6 +337,9 @@
     </message>
     </context>
 <context>
+    <name>RecentRequestsTableModel</name>
+    </context>
+<context>
     <name>SendCoinsDialog</name>
     <message>
         <source>Send Coins</source>
@@ -318,10 +356,6 @@
     <message>
         <source>Amount:</source>
         <translation>AMonto:</translation>
-    </message>
-    <message>
-        <source>Priority:</source>
-        <translation>Prioridad:</translation>
     </message>
     <message>
         <source>Change:</source>
@@ -372,6 +406,9 @@
     </message>
     </context>
 <context>
+    <name>SendConfirmationDialog</name>
+    </context>
+<context>
     <name>ShutdownWindow</name>
     </context>
 <context>
@@ -400,13 +437,35 @@
     <name>TrafficGraphWidget</name>
     </context>
 <context>
+    <name>TransactionDesc</name>
+    </context>
+<context>
     <name>TransactionDescDialog</name>
+    </context>
+<context>
+    <name>TransactionTableModel</name>
+    </context>
+<context>
+    <name>TransactionView</name>
     </context>
 <context>
     <name>UnitDisplayStatusBarControl</name>
     </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>WalletFrame</name>
+    </context>
+<context>
+    <name>WalletModel</name>
+    </context>
+<context>
+    <name>WalletView</name>
+    <message>
+        <source>Export the data in the current tab to a file</source>
+        <translation>Exportar los datos en la pestaña actual a un archivo</translation>
+    </message>
+    </context>
+<context>
+    <name>ixcoin-core</name>
     <message>
         <source>Options:</source>
         <translation>Opciones:</translation>
