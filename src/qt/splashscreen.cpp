@@ -1,23 +1,23 @@
-// Copyright (c) 2011-2015 The Bitcoin Core developers
+// Copyright (c) 2011-2017 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #if defined(HAVE_CONFIG_H)
-#include "config/bitcoin-config.h"
+#include <config/bitcoin-config.h>
 #endif
 
-#include "splashscreen.h"
+#include <qt/splashscreen.h>
 
-#include "networkstyle.h"
+#include <qt/networkstyle.h>
 
-#include "clientversion.h"
-#include "init.h"
-#include "util.h"
-#include "ui_interface.h"
-#include "version.h"
+#include <clientversion.h>
+#include <init.h>
+#include <util.h>
+#include <ui_interface.h>
+#include <version.h>
 
 #ifdef ENABLE_WALLET
-#include "wallet/wallet.h"
+#include <wallet/wallet.h>
 #endif
 
 #include <QApplication>
@@ -131,11 +131,22 @@ SplashScreen::SplashScreen(Qt::WindowFlags f, const NetworkStyle *networkStyle) 
     move(QApplication::desktop()->screenGeometry().center() - r.center());
 
     subscribeToCoreSignals();
+    installEventFilter(this);
 }
 
 SplashScreen::~SplashScreen()
 {
     unsubscribeFromCoreSignals();
+}
+
+bool SplashScreen::eventFilter(QObject * obj, QEvent * ev) {
+    if (ev->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(ev);
+        if(keyEvent->text()[0] == 'q') {
+            StartShutdown();
+        }
+    }
+    return QObject::eventFilter(obj, ev);
 }
 
 void SplashScreen::slotFinish(QWidget *mainWin)
@@ -147,6 +158,7 @@ void SplashScreen::slotFinish(QWidget *mainWin)
     if (isMinimized())
         showNormal();
     hide();
+    deleteLater(); // No more need for this
 }
 
 static void InitMessage(SplashScreen *splash, const std::string &message)
@@ -158,15 +170,19 @@ static void InitMessage(SplashScreen *splash, const std::string &message)
         Q_ARG(QColor, QColor(55,55,55)));
 }
 
-static void ShowProgress(SplashScreen *splash, const std::string &title, int nProgress)
+static void ShowProgress(SplashScreen *splash, const std::string &title, int nProgress, bool resume_possible)
 {
-    InitMessage(splash, title + strprintf("%d", nProgress) + "%");
+    InitMessage(splash, title + std::string("\n") +
+            (resume_possible ? _("(press q to shutdown and continue later)")
+                                : _("press q to shutdown")) +
+            strprintf("\n%d", nProgress) + "%");
 }
 
 #ifdef ENABLE_WALLET
-static void ConnectWallet(SplashScreen *splash, CWallet* wallet)
+void SplashScreen::ConnectWallet(CWallet* wallet)
 {
-    wallet->ShowProgress.connect(boost::bind(ShowProgress, splash, _1, _2));
+    wallet->ShowProgress.connect(boost::bind(ShowProgress, this, _1, _2, false));
+    connectedWallets.push_back(wallet);
 }
 #endif
 
@@ -174,9 +190,9 @@ void SplashScreen::subscribeToCoreSignals()
 {
     // Connect signals to client
     uiInterface.InitMessage.connect(boost::bind(InitMessage, this, _1));
-    uiInterface.ShowProgress.connect(boost::bind(ShowProgress, this, _1, _2));
+    uiInterface.ShowProgress.connect(boost::bind(ShowProgress, this, _1, _2, _3));
 #ifdef ENABLE_WALLET
-    uiInterface.LoadWallet.connect(boost::bind(ConnectWallet, this, _1));
+    uiInterface.LoadWallet.connect(boost::bind(&SplashScreen::ConnectWallet, this, _1));
 #endif
 }
 
@@ -184,10 +200,11 @@ void SplashScreen::unsubscribeFromCoreSignals()
 {
     // Disconnect signals from client
     uiInterface.InitMessage.disconnect(boost::bind(InitMessage, this, _1));
-    uiInterface.ShowProgress.disconnect(boost::bind(ShowProgress, this, _1, _2));
+    uiInterface.ShowProgress.disconnect(boost::bind(ShowProgress, this, _1, _2, _3));
 #ifdef ENABLE_WALLET
-    if(pwalletMain)
-        pwalletMain->ShowProgress.disconnect(boost::bind(ShowProgress, this, _1, _2));
+    for (CWallet* const & pwallet : connectedWallets) {
+        pwallet->ShowProgress.disconnect(boost::bind(ShowProgress, this, _1, _2, false));
+    }
 #endif
 }
 
