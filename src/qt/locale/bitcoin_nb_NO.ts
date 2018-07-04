@@ -1,349 +1,365 @@
-<TS language="zh_HK" version="2.1">
+<TS language="nb_NO" version="2.1">
 <context>
     <name>AddressBookPage</name>
     <message>
         <source>Right-click to edit address or label</source>
-        <translation>按右擊修改位址或標記</translation>
+        <translation>Høyreklikk for å redigere adresse, eller beskrivelse</translation>
     </message>
     <message>
         <source>Create a new address</source>
-        <translation>新增一個位址</translation>
+        <translation>Opprett en ny adresse</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation>新增 &amp;N</translation>
+        <translation>&amp;Ny</translation>
     </message>
     <message>
         <source>Copy the currently selected address to the system clipboard</source>
-        <translation>複製目前選擇的位址到系統剪貼簿</translation>
+        <translation>Kopier den valgte adressen til utklippstavlen</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation>複製 &amp;C</translation>
+        <translation>&amp;Kopier</translation>
     </message>
     <message>
         <source>C&amp;lose</source>
-        <translation>關閉 &amp;l</translation>
+        <translation>&amp;Lukk</translation>
     </message>
     <message>
         <source>Delete the currently selected address from the list</source>
-        <translation>把目前選擇的位址從列表中刪除</translation>
+        <translation>Slett den valgte adressen fra listen</translation>
     </message>
     <message>
         <source>Export the data in the current tab to a file</source>
-        <translation>把目前分頁的資料匯出至檔案</translation>
+        <translation>Eksporter data i den valgte fliken til en fil</translation>
     </message>
     <message>
         <source>&amp;Export</source>
-        <translation>匯出 &amp;E</translation>
+        <translation>&amp;Eksport</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation>刪除 &amp;D</translation>
+        <translation>&amp;Slett</translation>
     </message>
     <message>
         <source>Choose the address to send coins to</source>
-        <translation>選擇要付錢過去的地址</translation>
+        <translation>Velg en adresse å sende mynter til</translation>
     </message>
     <message>
         <source>Choose the address to receive coins with</source>
-        <translation>選擇要收錢的地址</translation>
+        <translation>Velg adressen som skal motta myntene</translation>
     </message>
     <message>
         <source>C&amp;hoose</source>
-        <translation>選擇 &amp;h</translation>
+        <translation>&amp;Velg</translation>
     </message>
     <message>
         <source>Sending addresses</source>
-        <translation>付款地址</translation>
+        <translation>Avsender adresser</translation>
     </message>
     <message>
         <source>Receiving addresses</source>
-        <translation>收款地址</translation>
+        <translation>Mottager adresser</translation>
     </message>
     <message>
         <source>These are your Ixcoin addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>這些是你要付款過去的 Ixcoin 位址。在付款之前，務必要檢查金額和收款位址是否正確。</translation>
+        <translation>Dette er dine Ixcoin adresser for å sende  å sende betalinger. Husk å sjekke beløp og mottager adresser før du sender mynter.</translation>
     </message>
     <message>
         <source>These are your Ixcoin addresses for receiving payments. It is recommended to use a new receiving address for each transaction.</source>
-        <translation>這些是你用來收款的 Ixcoin 位址。建議在每次交易時，都使用一個新的收款位址。</translation>
+        <translation>Dette er dine Ixcoin adresse for å motta betalinger. Det er anbefalt å bruke en ny mottager adresse for hver transaksjon.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
-        <translation>複製地址 &amp;C</translation>
+        <translation>&amp;Kopier adresse</translation>
     </message>
     <message>
         <source>Copy &amp;Label</source>
-        <translation>複製標記 &amp;L</translation>
+        <translation>Kopier &amp;beskrivelse</translation>
     </message>
     <message>
         <source>&amp;Edit</source>
-        <translation>編輯 &amp;E</translation>
+        <translation>R&amp;ediger</translation>
     </message>
     <message>
         <source>Export Address List</source>
-        <translation>匯出地址清單</translation>
+        <translation>Eksporter adresse listen</translation>
     </message>
     <message>
         <source>Comma separated file (*.csv)</source>
-        <translation>逗號分隔檔 (*.csv)</translation>
+        <translation>Komma separert fil (*.csv)</translation>
     </message>
     <message>
         <source>Exporting Failed</source>
-        <translation>匯出失敗</translation>
+        <translation>Eksporten feilet</translation>
     </message>
     <message>
         <source>There was an error trying to save the address list to %1. Please try again.</source>
-        <translation>儲存地址列表到 %1 時發生錯誤。請再試一次。</translation>
+        <translation>Fet oppstod en feil ved lagring av adresselisten til %1. Vennligst prøv igjen.</translation>
     </message>
 </context>
 <context>
     <name>AddressTableModel</name>
     <message>
         <source>Label</source>
-        <translation>標記</translation>
+        <translation>Beskrivelse</translation>
     </message>
     <message>
         <source>Address</source>
-        <translation>地址</translation>
+        <translation>Adresse</translation>
     </message>
     <message>
         <source>(no label)</source>
-        <translation>(無標記)</translation>
+        <translation>(ingen beskrivelse)</translation>
     </message>
 </context>
 <context>
     <name>AskPassphraseDialog</name>
     <message>
         <source>Passphrase Dialog</source>
-        <translation>複雜密碼對話方塊</translation>
+        <translation>Passord dialog</translation>
     </message>
     <message>
         <source>Enter passphrase</source>
-        <translation>請輸入密碼</translation>
+        <translation>Oppgi passord setning</translation>
     </message>
     <message>
         <source>New passphrase</source>
-        <translation>新密碼</translation>
+        <translation>Ny passord setning</translation>
     </message>
     <message>
         <source>Repeat new passphrase</source>
-        <translation>重複新密碼</translation>
+        <translation>Repeter passorsetningen</translation>
     </message>
     <message>
         <source>Enter the new passphrase to the wallet.&lt;br/&gt;Please use a passphrase of &lt;b&gt;ten or more random characters&lt;/b&gt;, or &lt;b&gt;eight or more words&lt;/b&gt;.</source>
-        <translation>輸入錢包的新密碼。&lt;br/&gt;密碼請用&lt;b&gt;10 個或以上的隨機字元&lt;/b&gt;，或是&lt;b&gt;8 個或以上的字詞&lt;/b&gt;。</translation>
+        <translation>Oppgi passordsetningen for lommeboken. &lt;br/&gt;Vennligst bruk en passordsetninge med &lt;b&gt;ti, eller flere tilfeldige tegn &lt;/b&gt;, eller &lt;b&gt;åtte, eller flere ord&lt;/b&gt;.</translation>
     </message>
     <message>
         <source>Encrypt wallet</source>
-        <translation>加密錢包</translation>
+        <translation>Krypter lommeboken</translation>
     </message>
     <message>
         <source>This operation needs your wallet passphrase to unlock the wallet.</source>
-        <translation>這個動作需要你的錢包密碼來將錢包解鎖。</translation>
+        <translation>Denne operasjonen krever passordsetningen for å låse opp lommeboken.</translation>
     </message>
     <message>
         <source>Unlock wallet</source>
-        <translation>解鎖錢包</translation>
+        <translation>Lås opp lommeboken</translation>
     </message>
     <message>
         <source>This operation needs your wallet passphrase to decrypt the wallet.</source>
-        <translation>這個動作需要你的錢包密碼來將錢包解密。</translation>
+        <translation>Denne operasjonen krever passordsetningen for å dekryptere lommeboken.</translation>
     </message>
     <message>
         <source>Decrypt wallet</source>
-        <translation>解密錢包</translation>
+        <translation>Dekrypter lommeboken</translation>
     </message>
     <message>
         <source>Change passphrase</source>
-        <translation>更改密碼</translation>
+        <translation>Endre passordsetningen</translation>
     </message>
     <message>
         <source>Enter the old passphrase and new passphrase to the wallet.</source>
-        <translation>輸入舊密碼和新密碼至錢包。</translation>
+        <translation>Oppgi den gamle og den nye passordsetningen for lommeboken.</translation>
     </message>
     <message>
         <source>Confirm wallet encryption</source>
-        <translation>確認錢包加密</translation>
+        <translation>Bekreft kryptering av lommeboken</translation>
     </message>
     <message>
         <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR IXCOINS&lt;/b&gt;!</source>
-        <translation>警告: 如果你將錢包加密後又忘記密碼，你就會&lt;b&gt;失去所有 Ixcoin 了&lt;/b&gt;！</translation>
+        <translation>Advarsel: Dersom du krypterer lommeboken og mister passordsetningen vil du &lt;b&gt;MISTE ALLE DINE IXCOIN&lt;/b&gt;!</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
-        <translation>你確定要把錢包加密嗎？</translation>
+        <translation>Er du sikker på at du vil kryptere lommeboken?</translation>
     </message>
     <message>
         <source>Wallet encrypted</source>
-        <translation>錢包已加密</translation>
+        <translation>Lommeboken er kryptert</translation>
     </message>
     <message>
         <source>%1 will close now to finish the encryption process. Remember that encrypting your wallet cannot fully protect your ixcoins from being stolen by malware infecting your computer.</source>
-        <translation>%1 現在要關閉來完成加密程序。請記得將錢包加密不能完全防止你的 Ixcoins 經被入侵電腦的惡意程式偷取。</translation>
+        <translation>%1 vil nå lukkes for å fullføre krypteringsprosessen. Husk at å kryptere lommeboken ikke kan beskytte dine ixcoin fullstendig fra å bli stjålet av skadelig programvare som har infisert datamaskinen din.</translation>
     </message>
     <message>
         <source>IMPORTANT: Any previous backups you have made of your wallet file should be replaced with the newly generated, encrypted wallet file. For security reasons, previous backups of the unencrypted wallet file will become useless as soon as you start using the new, encrypted wallet.</source>
-        <translation>重要: 請改用新產生的加密錢包檔，來取代所以舊錢包檔的備份。為安全計，當你開始使用新的加密錢包檔後，舊錢包檔的備份就不能再使用了。</translation>
+        <translation>VIKTIG: Alle tidligere sikkerhetskopier du har tatt av lommebokfilen bør erstattes med den nye krypterte lommebokfilen. Av sikkerhetsgrunner vil tidligere sikkerhetskopier av lommebokfilen bli ubrukelige når du begynner å bruke den ny kypterte lommeboken.</translation>
     </message>
     <message>
         <source>Wallet encryption failed</source>
-        <translation>錢包加密失敗</translation>
+        <translation>Kryptering av lommeboken feilet</translation>
     </message>
     <message>
         <source>Wallet encryption failed due to an internal error. Your wallet was not encrypted.</source>
-        <translation>因內部錯誤導致錢包加密失敗，你的錢包尚未加密。</translation>
+        <translation>Lommebokkrypteringen feilet pga. en intern feil. Lommeboken din ble ikke kryptert.</translation>
     </message>
     <message>
         <source>The supplied passphrases do not match.</source>
-        <translation>提供的密碼不一致。</translation>
+        <translation>De oppgitte passordsetningene er forskjellige.</translation>
     </message>
     <message>
         <source>Wallet unlock failed</source>
-        <translation>錢包解鎖失敗</translation>
+        <translation>Opplåsing av lommeboken feilet</translation>
     </message>
     <message>
         <source>The passphrase entered for the wallet decryption was incorrect.</source>
-        <translation>用來解密錢包的密碼不對。</translation>
+        <translation>Passordsetningen som ble oppgitt for å dekryptere lommeboken var feil.</translation>
     </message>
     <message>
         <source>Wallet decryption failed</source>
-        <translation>錢包解密失敗</translation>
+        <translation>Dekryptering av lommeboken feilet</translation>
     </message>
     <message>
         <source>Wallet passphrase was successfully changed.</source>
-        <translation>錢包密碼已成功更改。</translation>
+        <translation>Passordsetningen for lommeboken ble endret</translation>
     </message>
     <message>
         <source>Warning: The Caps Lock key is on!</source>
-        <translation>警告: Caps Lock 已啟用！</translation>
+        <translation>Advarsel: Caps Lock er på!</translation>
     </message>
 </context>
 <context>
     <name>BanTableModel</name>
     <message>
         <source>IP/Netmask</source>
-        <translation>IP位址/遮罩</translation>
+        <translation>IP/Nettmaske</translation>
     </message>
     <message>
         <source>Banned Until</source>
-        <translation>封鎖至</translation>
+        <translation>Utestengt Til</translation>
     </message>
 </context>
 <context>
     <name>BitcoinGUI</name>
     <message>
         <source>Sign &amp;message...</source>
-        <translation>簽署訊息... &amp;m</translation>
+        <translation>Signer &amp;melding</translation>
     </message>
     <message>
         <source>Synchronizing with network...</source>
-        <translation>與網絡同步中...</translation>
+        <translation>Synkroniserer med nettverket</translation>
     </message>
     <message>
         <source>&amp;Overview</source>
-        <translation>總覽 &amp;O</translation>
+        <translation>&amp;Oversikt</translation>
     </message>
     <message>
         <source>Node</source>
-        <translation>節點</translation>
+        <translation>Node</translation>
     </message>
     <message>
         <source>Show general overview of wallet</source>
-        <translation>顯示錢包一般總覽</translation>
+        <translation>Vis generell oversikt over lommeboken</translation>
     </message>
     <message>
         <source>&amp;Transactions</source>
-        <translation>交易 &amp;T</translation>
+        <translation>&amp;Transaksjoner</translation>
     </message>
     <message>
         <source>Browse transaction history</source>
-        <translation>瀏覽交易紀錄</translation>
+        <translation>Bla gjennom transaksjoner</translation>
     </message>
     <message>
         <source>E&amp;xit</source>
-        <translation>結束 &amp;x</translation>
+        <translation>&amp;Avslutt</translation>
     </message>
     <message>
         <source>Quit application</source>
-        <translation>結束應用程式</translation>
+        <translation>Avslutt program</translation>
     </message>
     <message>
         <source>&amp;About %1</source>
-        <translation>關於 %1 &amp;A</translation>
+        <translation>&amp;Om %1</translation>
     </message>
     <message>
         <source>Show information about %1</source>
-        <translation>顯示 %1 的相關資訊</translation>
+        <translation>Vis informasjon om %1</translation>
     </message>
     <message>
         <source>About &amp;Qt</source>
-        <translation>關於 Qt &amp;Q</translation>
+        <translation>Om &amp;Qt</translation>
     </message>
     <message>
         <source>Show information about Qt</source>
-        <translation>顯示 Qt 相關資訊</translation>
+        <translation>Vis informasjon om Qt</translation>
     </message>
     <message>
         <source>&amp;Options...</source>
-        <translation>選項... &amp;O</translation>
+        <translation>&amp;Alternativer</translation>
     </message>
     <message>
         <source>Modify configuration options for %1</source>
-        <translation>修正 %1 的設定選項</translation>
+        <translation>Endre konfigurasjonsalternativer for %1</translation>
     </message>
     <message>
         <source>&amp;Encrypt Wallet...</source>
-        <translation>加密錢包... &amp;E</translation>
+        <translation>&amp;Krypter lommebok...</translation>
     </message>
     <message>
         <source>&amp;Backup Wallet...</source>
-        <translation>備份錢包... &amp;B</translation>
+        <translation>&amp;Sikkerhetskopier lommebok</translation>
     </message>
     <message>
         <source>&amp;Change Passphrase...</source>
-        <translation>改變密碼... &amp;C</translation>
+        <translation>&amp;Endre passordsetning</translation>
     </message>
     <message>
         <source>&amp;Sending addresses...</source>
-        <translation>付款位址... &amp;S</translation>
+        <translation>&amp;Avsender adresser</translation>
     </message>
     <message>
         <source>&amp;Receiving addresses...</source>
-        <translation>收款位址... &amp;R</translation>
+        <translation>&amp;Mottager adresser</translation>
     </message>
     <message>
         <source>Open &amp;URI...</source>
-        <translation>開啓網址... &amp;U</translation>
+        <translation>Åpne &amp;URI</translation>
+    </message>
+    <message>
+        <source>Click to disable network activity.</source>
+        <translation>Klikk for å slå av nettverksaktivitet.</translation>
+    </message>
+    <message>
+        <source>Network activity disabled.</source>
+        <translation>Nettverksaktivitet er slått av</translation>
+    </message>
+    <message>
+        <source>Click to enable network activity again.</source>
+        <translation>Klikk for å slå på nettverksaktivitet igjen.</translation>
+    </message>
+    <message>
+        <source>Syncing Headers (%1%)...</source>
+        <translation>Synkroniserer Headers (%1%)...</translation>
     </message>
     <message>
         <source>Reindexing blocks on disk...</source>
-        <translation>正在為磁碟區塊重建索引...</translation>
+        <translation>Reindekserer blokker på disken</translation>
     </message>
     <message>
         <source>Send coins to a Ixcoin address</source>
-        <translation>付款至一個 Ixcoin 位址</translation>
+        <translation>Send mynter til en Ixcoin adresse</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
-        <translation>把錢包備份到其它地方</translation>
+        <translation>Sikkerhetskopier lommeboken til en annen lokasjon</translation>
     </message>
     <message>
         <source>Change the passphrase used for wallet encryption</source>
-        <translation>改變錢包加密用的密碼</translation>
+        <translation>Endre passordsetningen for kryptering av lommeboken</translation>
     </message>
     <message>
         <source>&amp;Debug window</source>
-        <translation>除錯視窗 &amp;D</translation>
+        <translation>&amp;Feilsøkingsvindu</translation>
     </message>
     <message>
         <source>Open debugging and diagnostic console</source>
-        <translation>開啓除錯和診斷主控台</translation>
+        <translation>Åpne konsoll for feilsøking og diagnostisering</translation>
     </message>
     <message>
         <source>&amp;Verify message...</source>
-        <translation>驗證訊息... &amp;V</translation>
+        <translation>&amp;Verifiser meldingen...</translation>
     </message>
     <message>
         <source>Ixcoin</source>
@@ -351,68 +367,160 @@
     </message>
     <message>
         <source>Wallet</source>
-        <translation>錢包</translation>
+        <translation>Lommebok</translation>
     </message>
     <message>
         <source>&amp;Send</source>
-        <translation>付款 &amp;S</translation>
+        <translation>&amp;Sende</translation>
     </message>
     <message>
         <source>&amp;Receive</source>
-        <translation>收款 &amp;R</translation>
+        <translation>&amp;Motta</translation>
     </message>
     <message>
         <source>&amp;Show / Hide</source>
-        <translation>顯示 / 隱藏 &amp;S</translation>
+        <translation>Vi&amp;s / Skjul</translation>
     </message>
     <message>
         <source>Show or hide the main Window</source>
-        <translation>顯示或隱藏主視窗</translation>
+        <translation>Vis, eller skjul, hovedvinduet</translation>
+    </message>
+    <message>
+        <source>Encrypt the private keys that belong to your wallet</source>
+        <translation>Krypter de private nøklene som tilhører lommeboken din</translation>
+    </message>
+    <message>
+        <source>Sign messages with your Ixcoin addresses to prove you own them</source>
+        <translation>Signer meldingene med Ixcoin adresse for å bevise at diu eier dem</translation>
+    </message>
+    <message>
+        <source>Verify messages to ensure they were signed with specified Ixcoin addresses</source>
+        <translation>Verifiser meldinger for å sikre at de ble signert med en angitt Ixcoin adresse</translation>
     </message>
     <message>
         <source>&amp;File</source>
-        <translation>檔案 &amp;F</translation>
+        <translation>&amp;Fil</translation>
     </message>
     <message>
         <source>&amp;Settings</source>
-        <translation>設定 &amp;S</translation>
+        <translation>Inn&amp;stillinger</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>說明 &amp;H</translation>
+        <translation>&amp;Hjelp</translation>
+    </message>
+    <message>
+        <source>Tabs toolbar</source>
+        <translation>Hjelpelinje for fliker</translation>
     </message>
     <message>
         <source>Request payments (generates QR codes and ixcoin: URIs)</source>
-        <translation>要求付款 (產生QR碼 ixcoin: URIs)</translation>
+        <translation>Be om betalinger (genererer QR-koder og ixcoin-URIer)</translation>
     </message>
     <message>
-        <source>Indexing blocks on disk...</source>
-        <translation>正在為磁碟區塊建立索引...</translation>
+        <source>Show the list of used sending addresses and labels</source>
+        <translation>Vis lista over brukte sendeadresser og merkelapper</translation>
+    </message>
+    <message>
+        <source>Show the list of used receiving addresses and labels</source>
+        <translation>Vis lista over brukte mottakeradresser og merkelapper</translation>
+    </message>
+    <message>
+        <source>Open a ixcoin: URI or payment request</source>
+        <translation>Åpne en ixcoin: URI eller betalingsforespørsel</translation>
+    </message>
+    <message>
+        <source>&amp;Command-line options</source>
+        <translation>&amp;Kommandolinjealternativer</translation>
+    </message>
+    <message>
+        <source>Processing blocks on disk...</source>
+        <translation>Behandler blokker på disken…</translation>
+    </message>
+    <message>
+        <source>%1 behind</source>
+        <translation>%1 bak</translation>
+    </message>
+    <message>
+        <source>Last received block was generated %1 ago.</source>
+        <translation>Siste mottatte blokk ble generert for %1 siden.</translation>
+    </message>
+    <message>
+        <source>Transactions after this will not yet be visible.</source>
+        <translation>Transaksjoner etter dette vil ikke være synlige ennå.</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>錯誤</translation>
+        <translation>Feilmelding</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>警告</translation>
+        <translation>Advarsel</translation>
     </message>
     <message>
         <source>Information</source>
-        <translation>資訊</translation>
+        <translation>Informasjon</translation>
+    </message>
+    <message>
+        <source>Up to date</source>
+        <translation>Oppdatert</translation>
+    </message>
+    <message>
+        <source>Show the %1 help message to get a list with possible Ixcoin command-line options</source>
+        <translation>Vis %1-hjelpemeldingen for å få en liste over mulige Ixcoin-kommandolinjealternativer</translation>
+    </message>
+    <message>
+        <source>%1 client</source>
+        <translation>%1-klient</translation>
+    </message>
+    <message>
+        <source>Catching up...</source>
+        <translation>Tar igjen…</translation>
     </message>
     <message>
         <source>Date: %1
 </source>
-        <translation>日期: %1
+        <translation>Dato: %1
 </translation>
+    </message>
+    <message>
+        <source>Amount: %1
+</source>
+        <translation>Mengde: %1
+</translation>
+    </message>
+    <message>
+        <source>Type: %1
+</source>
+        <translation>Type: %1
+</translation>
+    </message>
+    <message>
+        <source>Label: %1
+</source>
+        <translation>Merkelapp: %1
+</translation>
+    </message>
+    <message>
+        <source>Address: %1
+</source>
+        <translation>Adresse: %1
+</translation>
+    </message>
+    <message>
+        <source>Sent transaction</source>
+        <translation>Sendt transaksjon</translation>
+    </message>
+    <message>
+        <source>Incoming transaction</source>
+        <translation>Innkommende transaksjon</translation>
     </message>
     </context>
 <context>
     <name>CoinControlDialog</name>
     <message>
         <source>(no label)</source>
-        <translation>(無標記)</translation>
+        <translation>(ingen beskrivelse)</translation>
     </message>
     </context>
 <context>
@@ -432,7 +540,7 @@
     </message>
     <message>
         <source>Error</source>
-        <translation>錯誤</translation>
+        <translation>Feilmelding</translation>
     </message>
     </context>
 <context>
@@ -445,7 +553,7 @@
     <name>OptionsDialog</name>
     <message>
         <source>Error</source>
-        <translation>錯誤</translation>
+        <translation>Feilmelding</translation>
     </message>
     </context>
 <context>
@@ -456,122 +564,18 @@
     </context>
 <context>
     <name>PeerTableModel</name>
-    <message>
-        <source>Sent</source>
-        <translation>已送出</translation>
-    </message>
-    <message>
-        <source>Received</source>
-        <translation>已接收</translation>
-    </message>
-</context>
+    </context>
 <context>
     <name>QObject</name>
-    <message>
-        <source>Enter a Ixcoin address (e.g. %1)</source>
-        <translation>輸入一個 Ixcoin 位址 (例如 %1)</translation>
-    </message>
-    <message>
-        <source>%1 d</source>
-        <translation>%1 日</translation>
-    </message>
-    <message>
-        <source>%1 h</source>
-        <translation>%1 小時</translation>
-    </message>
-    <message>
-        <source>%1 m</source>
-        <translation>%1 分</translation>
-    </message>
-    <message>
-        <source>%1 s</source>
-        <translation>%1 秒</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>沒有</translation>
-    </message>
-    <message>
-        <source>N/A</source>
-        <translation>N/A</translation>
-    </message>
-    <message>
-        <source>%1 ms</source>
-        <translation>%1 亳秒</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n second(s)</source>
-        <translation><numerusform>%n 秒</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n minute(s)</source>
-        <translation><numerusform>%n 分鐘</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n hour(s)</source>
-        <translation><numerusform>%n 小時</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n day(s)</source>
-        <translation><numerusform>%n 日</numerusform></translation>
-    </message>
-    <message numerus="yes">
-        <source>%n week(s)</source>
-        <translation><numerusform>%n 星期</numerusform></translation>
-    </message>
-    <message>
-        <source>%1 and %2</source>
-        <translation>%1 和 %2</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n year(s)</source>
-        <translation><numerusform>%n 年</numerusform></translation>
-    </message>
     </context>
 <context>
     <name>QObject::QObject</name>
     </context>
 <context>
     <name>QRImageWidget</name>
-    <message>
-        <source>Save QR Code</source>
-        <translation>儲存 QR 碼</translation>
-    </message>
-    <message>
-        <source>PNG Image (*.png)</source>
-        <translation>PNG 影像(*.png)</translation>
-    </message>
-</context>
+    </context>
 <context>
     <name>RPCConsole</name>
-    <message>
-        <source>N/A</source>
-        <translation>N/A</translation>
-    </message>
-    <message>
-        <source>&amp;Information</source>
-        <translation>資訊 &amp;I</translation>
-    </message>
-    <message>
-        <source>Debug window</source>
-        <translation>除錯視窗</translation>
-    </message>
-    <message>
-        <source>General</source>
-        <translation>一般</translation>
-    </message>
-    <message>
-        <source>Received</source>
-        <translation>已接收</translation>
-    </message>
-    <message>
-        <source>Sent</source>
-        <translation>已送出</translation>
-    </message>
-    <message>
-        <source>Version</source>
-        <translation>版本</translation>
-    </message>
     </context>
 <context>
     <name>ReceiveCoinsDialog</name>
@@ -580,29 +584,29 @@
     <name>ReceiveRequestDialog</name>
     <message>
         <source>Address</source>
-        <translation>地址</translation>
+        <translation>Adresse</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation>標記</translation>
+        <translation>Beskrivelse</translation>
     </message>
     </context>
 <context>
     <name>RecentRequestsTableModel</name>
     <message>
         <source>Label</source>
-        <translation>標記</translation>
+        <translation>Beskrivelse</translation>
     </message>
     <message>
         <source>(no label)</source>
-        <translation>(無標記)</translation>
+        <translation>(ingen beskrivelse)</translation>
     </message>
     </context>
 <context>
     <name>SendCoinsDialog</name>
     <message>
         <source>(no label)</source>
-        <translation>(無標記)</translation>
+        <translation>(ingen beskrivelse)</translation>
     </message>
 </context>
 <context>
@@ -625,10 +629,6 @@
     </context>
 <context>
     <name>TransactionDesc</name>
-    <message>
-        <source>Open until %1</source>
-        <translation>開放至 %1</translation>
-    </message>
     </context>
 <context>
     <name>TransactionDescDialog</name>
@@ -637,34 +637,30 @@
     <name>TransactionTableModel</name>
     <message>
         <source>Label</source>
-        <translation>標記</translation>
-    </message>
-    <message>
-        <source>Open until %1</source>
-        <translation>開放至 %1</translation>
+        <translation>Beskrivelse</translation>
     </message>
     <message>
         <source>(no label)</source>
-        <translation>(無標記)</translation>
+        <translation>(ingen beskrivelse)</translation>
     </message>
     </context>
 <context>
     <name>TransactionView</name>
     <message>
         <source>Comma separated file (*.csv)</source>
-        <translation>逗號分隔檔 (*.csv)</translation>
+        <translation>Komma separert fil (*.csv)</translation>
     </message>
     <message>
         <source>Label</source>
-        <translation>標記</translation>
+        <translation>Beskrivelse</translation>
     </message>
     <message>
         <source>Address</source>
-        <translation>地址</translation>
+        <translation>Adresse</translation>
     </message>
     <message>
         <source>Exporting Failed</source>
-        <translation>匯出失敗</translation>
+        <translation>Eksporten feilet</translation>
     </message>
     </context>
 <context>
@@ -680,26 +676,26 @@
     <name>WalletView</name>
     <message>
         <source>&amp;Export</source>
-        <translation>匯出 &amp;E</translation>
+        <translation>&amp;Eksport</translation>
     </message>
     <message>
         <source>Export the data in the current tab to a file</source>
-        <translation>把目前分頁的資料匯出至檔案</translation>
+        <translation>Eksporter data i den valgte fliken til en fil</translation>
     </message>
     </context>
 <context>
     <name>ixcoin-core</name>
     <message>
         <source>Information</source>
-        <translation>資訊</translation>
+        <translation>Informasjon</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>警告</translation>
+        <translation>Advarsel</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>錯誤</translation>
+        <translation>Feilmelding</translation>
     </message>
 </context>
 </TS>

@@ -25,7 +25,22 @@
         <source>&amp;Delete</source>
         <translation>&amp;அழி</translation>
     </message>
-</context>
+    <message>
+        <source>Sending addresses</source>
+        <translation>முகவரிகள் அனுப்பப்படுகின்றன</translation>
+    </message>
+    <message>
+        <source>Receiving addresses</source>
+        <translation>முகவரிகள் பெறப்படுகின்றன</translation>
+    </message>
+    </context>
+<context>
+    <name>AddressTableModel</name>
+    <message>
+        <source>Address</source>
+        <translation>முகவரி</translation>
+    </message>
+    </context>
 <context>
     <name>AskPassphraseDialog</name>
     </context>
@@ -75,8 +90,8 @@
         <translation>&amp;செய்தியை சரிசெய்...</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
-        <translation>Bitcoin</translation>
+        <source>Ixcoin</source>
+        <translation>Ixcoin</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -105,14 +120,6 @@
     <message>
         <source>&amp;Help</source>
         <translation>&amp;உதவி</translation>
-    </message>
-    <message numerus="yes">
-        <source>%n hour(s)</source>
-        <translation><numerusform>%n மணி</numerusform><numerusform>%n மணி</numerusform></translation>
-    </message>
-    <message>
-        <source>%1 and %2</source>
-        <translation>%1 மற்றும் %2</translation>
     </message>
     <message>
         <source>%1 behind</source>
@@ -170,10 +177,6 @@
         <translation>விலை:</translation>
     </message>
     <message>
-        <source>Priority:</source>
-        <translation>முன்னுரிமை</translation>
-    </message>
-    <message>
         <source>Fee:</source>
         <translation>கட்டணம்:</translation>
     </message>
@@ -201,11 +204,7 @@
         <source>Confirmed</source>
         <translation>உறுதியாக</translation>
     </message>
-    <message>
-        <source>Priority</source>
-        <translation>முன்னுரிமை</translation>
-    </message>
-</context>
+    </context>
 <context>
     <name>EditAddressDialog</name>
     </context>
@@ -226,8 +225,23 @@
         <translation>நல்வரவு</translation>
     </message>
     <message>
+        <source>Ixcoin</source>
+        <translation>Ixcoin</translation>
+    </message>
+    <message>
         <source>Error</source>
         <translation>தவறு</translation>
+    </message>
+    </context>
+<context>
+    <name>ModalOverlay</name>
+    <message>
+        <source>Form</source>
+        <translation>படிவம்</translation>
+    </message>
+    <message>
+        <source>Hide</source>
+        <translation>மறை</translation>
     </message>
     </context>
 <context>
@@ -303,6 +317,10 @@
         <source>none</source>
         <translation>none</translation>
     </message>
+    <message>
+        <source>Error</source>
+        <translation>தவறு</translation>
+    </message>
     </context>
 <context>
     <name>OverviewPage</name>
@@ -332,16 +350,19 @@
     </message>
     </context>
 <context>
+    <name>PaymentServer</name>
+    </context>
+<context>
     <name>PeerTableModel</name>
     <message>
         <source>User Agent</source>
         <translation>பயனர் முகவர்</translation>
     </message>
     <message>
-        <source>Ping Time</source>
-        <translation>பிங் நேரம்</translation>
+        <source>Sent</source>
+        <translation>அனுப்பிய</translation>
     </message>
-</context>
+    </context>
 <context>
     <name>QObject</name>
     <message>
@@ -368,7 +389,33 @@
         <source>%1 ms</source>
         <translation>%1 ms</translation>
     </message>
-</context>
+    <message>
+        <source>%1 and %2</source>
+        <translation>%1 மற்றும் %2</translation>
+    </message>
+    <message>
+        <source>%1 B</source>
+        <translation>%1 B</translation>
+    </message>
+    <message>
+        <source>%1 KB</source>
+        <translation>%1 KB</translation>
+    </message>
+    <message>
+        <source>%1 MB</source>
+        <translation>%1 MB</translation>
+    </message>
+    <message>
+        <source>%1 GB</source>
+        <translation>%1 GB</translation>
+    </message>
+    </context>
+<context>
+    <name>QObject::QObject</name>
+    </context>
+<context>
+    <name>QRImageWidget</name>
+    </context>
 <context>
     <name>RPCConsole</name>
     <message>
@@ -428,10 +475,6 @@
         <translation>&amp;பணியகம்</translation>
     </message>
     <message>
-        <source>&amp;Clear</source>
-        <translation>&amp;வழுநீக்கு</translation>
-    </message>
-    <message>
         <source>Totals</source>
         <translation>மொத்தம்</translation>
     </message>
@@ -458,22 +501,6 @@
     <message>
         <source>1 &amp;year</source>
         <translation>1 &amp;ஆண்டு</translation>
-    </message>
-    <message>
-        <source>%1 B</source>
-        <translation>%1 B</translation>
-    </message>
-    <message>
-        <source>%1 KB</source>
-        <translation>%1 KB</translation>
-    </message>
-    <message>
-        <source>%1 MB</source>
-        <translation>%1 MB</translation>
-    </message>
-    <message>
-        <source>%1 GB</source>
-        <translation>%1 GB</translation>
     </message>
     <message>
         <source>via %1</source>
@@ -530,7 +557,7 @@
         <source>Remove</source>
         <translation>நீக்கு</translation>
     </message>
-</context>
+    </context>
 <context>
     <name>ReceiveRequestDialog</name>
     <message>
@@ -549,7 +576,14 @@
         <source>&amp;Save Image...</source>
         <translation>&amp;படத்தை சேமி...</translation>
     </message>
-</context>
+    <message>
+        <source>Address</source>
+        <translation>முகவரி</translation>
+    </message>
+    </context>
+<context>
+    <name>RecentRequestsTableModel</name>
+    </context>
 <context>
     <name>SendCoinsDialog</name>
     <message>
@@ -559,10 +593,6 @@
     <message>
         <source>Amount:</source>
         <translation>விலை</translation>
-    </message>
-    <message>
-        <source>Priority:</source>
-        <translation>முன்னுரிமை</translation>
     </message>
     <message>
         <source>Fee:</source>
@@ -585,14 +615,6 @@
         <translation>மறை</translation>
     </message>
     <message>
-        <source>normal</source>
-        <translation>இயல்பான</translation>
-    </message>
-    <message>
-        <source>fast</source>
-        <translation>வேகமாக</translation>
-    </message>
-    <message>
         <source>Balance:</source>
         <translation>மீதி:</translation>
     </message>
@@ -600,7 +622,7 @@
         <source>S&amp;end</source>
         <translation>&amp;அனுப்பு</translation>
     </message>
-</context>
+    </context>
 <context>
     <name>SendCoinsEntry</name>
     <message>
@@ -623,6 +645,9 @@
         <source>Message:</source>
         <translation>செய்தி:</translation>
     </message>
+    </context>
+<context>
+    <name>SendConfirmationDialog</name>
     </context>
 <context>
     <name>ShutdownWindow</name>
@@ -653,16 +678,38 @@
     </message>
 </context>
 <context>
+    <name>TransactionDesc</name>
+    </context>
+<context>
     <name>TransactionDescDialog</name>
+    </context>
+<context>
+    <name>TransactionTableModel</name>
+    </context>
+<context>
+    <name>TransactionView</name>
+    <message>
+        <source>Address</source>
+        <translation>முகவரி</translation>
+    </message>
     </context>
 <context>
     <name>UnitDisplayStatusBarControl</name>
     </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>WalletFrame</name>
+    </context>
+<context>
+    <name>WalletModel</name>
+    </context>
+<context>
+    <name>WalletView</name>
+    </context>
+<context>
+    <name>ixcoin-core</name>
     <message>
-        <source>Bitcoin Core</source>
-        <translation>Bitcoin மையம்</translation>
+        <source>Ixcoin Core</source>
+        <translation>Ixcoin மையம்</translation>
     </message>
     <message>
         <source>(default: %u)</source>

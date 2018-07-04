@@ -37,7 +37,10 @@
         <source>&amp;Delete</source>
         <translation>&amp;Устгах</translation>
     </message>
-</context>
+    </context>
+<context>
+    <name>AddressTableModel</name>
+    </context>
 <context>
     <name>AskPassphraseDialog</name>
     <message>
@@ -52,7 +55,7 @@
         <source>Repeat new passphrase</source>
         <translation>Шинэ нууц үгийг давтана уу</translation>
     </message>
-</context>
+    </context>
 <context>
     <name>BanTableModel</name>
     </context>
@@ -123,8 +126,8 @@
         <translation>Оношилгоо ба засварын консолыг онгойлго</translation>
     </message>
     <message>
-        <source>Bitcoin</source>
-        <translation>Биткойн</translation>
+        <source>Ixcoin</source>
+        <translation>икойн</translation>
     </message>
     <message>
         <source>Wallet</source>
@@ -174,7 +177,7 @@
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
         <translation>Түрүйвч &lt;b&gt;цоожтой&lt;/b&gt; ба одоогоор цоож &lt;b&gt;хаалттай&lt;/b&gt; байна</translation>
     </message>
-</context>
+    </context>
 <context>
     <name>CoinControlDialog</name>
     <message>
@@ -212,7 +215,7 @@
         <source>&amp;Address</source>
         <translation>&amp;Хаяг</translation>
     </message>
-</context>
+    </context>
 <context>
     <name>FreespaceChecker</name>
     </context>
@@ -230,8 +233,19 @@
 <context>
     <name>Intro</name>
     <message>
+        <source>Ixcoin</source>
+        <translation>икойн</translation>
+    </message>
+    <message>
         <source>Error</source>
         <translation>Алдаа</translation>
+    </message>
+    </context>
+<context>
+    <name>ModalOverlay</name>
+    <message>
+        <source>Last block time</source>
+        <translation>Сүүлийн блокийн хугацаа</translation>
     </message>
     </context>
 <context>
@@ -264,6 +278,10 @@
         <translation>Ѳѳрчлѳлтүүдийг идэвхижүүлхийн тулд клиентийг ахин эхлүүлэх шаардлагтай</translation>
     </message>
     <message>
+        <source>Error</source>
+        <translation>Алдаа</translation>
+    </message>
+    <message>
         <source>This change would require a client restart.</source>
         <translation>Энэ ѳѳрчлѳлтийг оруулахын тулд кли1нт програмыг ахин эхлүүлэх шаардлагтай</translation>
     </message>
@@ -274,6 +292,9 @@
         <source>Available:</source>
         <translation>Хэрэглэж болох хэмжээ:</translation>
     </message>
+    </context>
+<context>
+    <name>PaymentServer</name>
     </context>
 <context>
     <name>PeerTableModel</name>
@@ -288,6 +309,16 @@
         <source>N/A</source>
         <translation>Алга Байна</translation>
     </message>
+    <message>
+        <source>unknown</source>
+        <translation>үл мэдэгдэх</translation>
+    </message>
+</context>
+<context>
+    <name>QObject::QObject</name>
+    </context>
+<context>
+    <name>QRImageWidget</name>
     </context>
 <context>
     <name>RPCConsole</name>
@@ -370,13 +401,16 @@
         <source>Remove</source>
         <translation>Устгах</translation>
     </message>
-</context>
+    </context>
 <context>
     <name>ReceiveRequestDialog</name>
     <message>
         <source>Copy &amp;Address</source>
         <translation>Хаягийг &amp;Хуулбарлах</translation>
     </message>
+    </context>
+<context>
+    <name>RecentRequestsTableModel</name>
     </context>
 <context>
     <name>SendCoinsDialog</name>
@@ -424,7 +458,7 @@
         <source>S&amp;end</source>
         <translation>Яв&amp;уул</translation>
     </message>
-</context>
+    </context>
 <context>
     <name>SendCoinsEntry</name>
     <message>
@@ -461,6 +495,9 @@
     </message>
     </context>
 <context>
+    <name>SendConfirmationDialog</name>
+    </context>
+<context>
     <name>ShutdownWindow</name>
     <message>
         <source>Do not shut down the computer until this window disappears.</source>
@@ -493,17 +530,35 @@
     <name>TrafficGraphWidget</name>
     </context>
 <context>
+    <name>TransactionDesc</name>
+    </context>
+<context>
     <name>TransactionDescDialog</name>
     <message>
         <source>This pane shows a detailed description of the transaction</source>
         <translation>Гүйлгээний дэлгэрэнгүйг энэ бичил цонх харуулж байна</translation>
     </message>
-</context>
+    </context>
+<context>
+    <name>TransactionTableModel</name>
+    </context>
+<context>
+    <name>TransactionView</name>
+    </context>
 <context>
     <name>UnitDisplayStatusBarControl</name>
     </context>
 <context>
-    <name>bitcoin-core</name>
+    <name>WalletFrame</name>
+    </context>
+<context>
+    <name>WalletModel</name>
+    </context>
+<context>
+    <name>WalletView</name>
+    </context>
+<context>
+    <name>Ixcoin-core</name>
     <message>
         <source>Options:</source>
         <translation>Сонголтууд:</translation>
@@ -517,24 +572,12 @@
         <translation>Мэдээллэл</translation>
     </message>
     <message>
-        <source>Loading addresses...</source>
-        <translation>Хаягуудыг ачааллаж байна...</translation>
-    </message>
-    <message>
-        <source>Invalid -proxy address: '%s'</source>
-        <translation>Эдгээр прокси хаягнууд буруу байна: '%s'</translation>
-    </message>
-    <message>
         <source>Insufficient funds</source>
         <translation>Таны дансны үлдэгдэл хүрэлцэхгүй байна</translation>
     </message>
     <message>
         <source>Loading block index...</source>
         <translation>Блокийн индексүүдийг ачааллаж байна...</translation>
-    </message>
-    <message>
-        <source>Add a node to connect to and attempt to keep the connection open</source>
-        <translation>Холболт хийхийн тулд мѳн холболтой онгорхой хадгалхын тулд шинэ нод нэм</translation>
     </message>
     <message>
         <source>Loading wallet...</source>
