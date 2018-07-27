@@ -600,6 +600,8 @@ public:
         return (hdr.nMessageSize == nDataPos);
     }
 
+    const uint256& GetMessageHash() const;
+
     void SetVersion(int nVersionIn)
     {
         hdrbuf.SetVersion(nVersionIn);
