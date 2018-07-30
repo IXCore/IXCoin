@@ -1,23 +1,21 @@
-<!--- Remove sections that do not apply -->
-### Describe the issue
+<!-- This issue tracker is only for technical issues related to ixcoin Core.
 
-### Is the issue reproducible?
-#### List steps to reproduce below:
-1. 
-2. 
-3. 
+General ixcoin questions and/or support requests are best directed to the ixcoin StackExchange at https://github.com/ixcore/ixcoin
 
-### Expected behavior
-Tell us what should happen
+For reporting security issues, please read instructions at https://github.com/ixcore/ixcoin.
 
-### Actual behavior
-Tell us what happens instead
+If the node is "stuck" during sync or giving "block checksum mismatch" errors, please ensure your hardware is stable by running memtest and observe CPU temperature with a load-test tool such as linpack before creating an issue! -->
 
-### Any information in the debug.log file related to this issue?
+<!-- Describe the issue -->
+<!--- What behavior did you expect? -->
 
-### Screenshots (if available)
+<!--- What was the actual behavior (provide screenshots if the issue is GUI-related)? -->
 
-### What binary version was used (official or self compiled)
+<!--- How reliably can you reproduce the issue, what are the steps to do so? -->
 
-### Machine specs: CPU, RAM, Disk space & OS (Windows, OS X, Linux) 
+<!-- What version of Ixcoin Core are you using, where did you get it (website, self-compiled, etc)? -->
 
+<!-- What type of machine are you observing the error on (OS/CPU and disk type)? -->
+
+<!-- Any extra information that might be useful in the debugging process. -->
+<!--- This is normally the contents of a `debug.log` or `config.log` file. Raw text or a link to a pastebin type site are preferred. -->
