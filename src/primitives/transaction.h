@@ -6,6 +6,7 @@
 #ifndef BITCOIN_PRIMITIVES_TRANSACTION_H
 #define BITCOIN_PRIMITIVES_TRANSACTION_H
 
+#include <policy/fees.h>
 #include "amount.h"
 #include "script/script.h"
 #include "serialize.h"
