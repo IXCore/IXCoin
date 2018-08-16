@@ -276,7 +276,7 @@ public:
         return ret;
     }
 
- /*   CBlockHeader GetBlockHeader() const
+    CBlockHeader GetBlockHeader() const
     {
         CBlockHeader block;
         block.nVersion       = nVersion;
@@ -288,7 +288,6 @@ public:
         block.nNonce         = nNonce;
         return block;
     }
-*/
 
     uint256 GetBlockHash() const
     {
