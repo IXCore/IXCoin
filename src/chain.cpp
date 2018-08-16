@@ -6,7 +6,7 @@
 
 #include <chain.h>
 
-#include "main.h"
+#include <validation.h>
 
 using namespace std;
 
