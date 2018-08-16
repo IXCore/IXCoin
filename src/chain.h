@@ -277,7 +277,9 @@ public:
         return ret;
     }
 
-    CBlockHeader GetBlockHeader() const
+
+ // Moved CBlockHeader to chain.cpp
+ /*CBlockHeader GetBlockHeader() const
     {
         CBlockHeader block;
         block.nVersion       = nVersion;
@@ -289,6 +291,8 @@ public:
         block.nNonce         = nNonce;
         return block;
     }
+ */   
+ CBlockHeader GetBlockHeader(const Consensus::Params& consensusParams) const;
 
     uint256 GetBlockHash() const
     {
