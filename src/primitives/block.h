@@ -28,6 +28,13 @@ public:
 
     // auxpow (if this is a merge-minded block)
     boost::shared_ptr<CAuxPow> auxpow;
+    // header
+    int32_t nVersion;
+    uint256 hashPrevBlock;
+    uint256 hashMerkleRoot;
+    uint32_t nTime;
+    uint32_t nBits;
+    uint32_t nNonce;
 
     CBlockHeader()
     {
@@ -37,7 +44,7 @@ public:
     ADD_SERIALIZE_METHODS;
 
     template <typename Stream, typename Operation>
-    inline void SerializationOp(Stream& s, Operation ser_action, int nType, int nVersion) {
+    inline void SerializationOp(Stream& s, Operation ser_action) {
         READWRITE(*(CPureBlockHeader*)this);
         nVersion = this->GetBaseVersion();
 
@@ -49,12 +56,24 @@ public:
             READWRITE(*auxpow);
         } else if (ser_action.ForRead())
             auxpow.reset();
+        READWRITE(this->nVersion);
+        READWRITE(hashPrevBlock);
+        READWRITE(hashMerkleRoot);
+        READWRITE(nTime);
+        READWRITE(nBits);
+        READWRITE(nNonce);
     }
 
     void SetNull()
     {
         CPureBlockHeader::SetNull();
         auxpow.reset();
+        nVersion = 0;
+        hashPrevBlock.SetNull();
+        hashMerkleRoot.SetNull();
+        nTime = 0;
+        nBits = 0;
+        nNonce = 0;
     }
 
     /**
@@ -63,6 +82,17 @@ public:
      * @param apow Pointer to the auxpow to use or NULL.
      */
     void SetAuxpow (CAuxPow* apow);
+    bool IsNull() const
+    {
+        return (nBits == 0);
+    }
+
+    uint256 GetHash() const;
+
+    int64_t GetBlockTime() const
+    {
+        return (int64_t)nTime;
+    }
 };
 
 
