@@ -1166,6 +1166,17 @@ bool ReadBlockFromDisk(CBlock& block, const CDiskBlockPos& pos, const Consensus:
     return true;
 }
 
+template<typename T>
+static bool ReadBlockOrHeader(T& block, const CBlockIndex* pindex, const Consensus::Params& consensusParams)
+{
+    if (!ReadBlockOrHeader(block, pindex->GetBlockPos(), consensusParams))
+        return false;
+    if (block.GetHash() != pindex->GetBlockHash())
+        return error("ReadBlockFromDisk(CBlock&, CBlockIndex*): GetHash() doesn't match index for %s at %s",
+                pindex->ToString(), pindex->GetBlockPos().ToString());
+    return true;
+}
+
 bool ReadBlockFromDisk(CBlock& block, const CBlockIndex* pindex, const Consensus::Params& consensusParams)
 {
     CDiskBlockPos blockPos;
@@ -1180,6 +1191,11 @@ bool ReadBlockFromDisk(CBlock& block, const CBlockIndex* pindex, const Consensus
         return error("ReadBlockFromDisk(CBlock&, CBlockIndex*): GetHash() doesn't match index for %s at %s",
                 pindex->ToString(), pindex->GetBlockPos().ToString());
     return true;
+}
+
+bool ReadBlockHeaderFromDisk(CBlockHeader& block, const CBlockIndex* pindex, const Consensus::Params& consensusParams)
+{
+    return ReadBlockOrHeader(block, pindex, consensusParams);
 }
 
 CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
