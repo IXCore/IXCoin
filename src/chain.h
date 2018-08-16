@@ -276,7 +276,7 @@ public:
         return ret;
     }
 
-    CBlockHeader GetBlockHeader() const
+ /*   CBlockHeader GetBlockHeader() const
     {
         CBlockHeader block;
         block.nVersion       = nVersion;
@@ -288,6 +288,7 @@ public:
         block.nNonce         = nNonce;
         return block;
     }
+*/
 
     uint256 GetBlockHash() const
     {
@@ -359,12 +360,12 @@ public:
     const CBlockIndex* GetAncestor(int height) const;
 
     /* Analyse the block version.  */
-/*    inline int GetBaseVersion() const
+    inline int GetBaseVersion() const
     {
         return CPureBlockHeader::GetBaseVersion(nVersion);
     }
 
-*/
+
 };
 
 arith_uint256 GetBlockProof(const CBlockIndex& block);
