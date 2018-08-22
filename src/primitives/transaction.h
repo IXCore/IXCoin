@@ -348,6 +348,17 @@ public:
 
     std::string ToString() const;
 
+    // Add overloaded HasWitness
+    bool HasWitness() const
+    {
+        for (size_t i = 0; i < vin.size(); i++) {
+            if (!vin[i].scriptWitness.IsNull()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 //    void UpdateHash() const;
 };
 
