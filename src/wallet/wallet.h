@@ -8,6 +8,7 @@
 #define BITCOIN_WALLET_WALLET_H
 
 #include <amount.h>
+#include <auxpow.h> // contains CBaseMerkleTx
 #include <policy/feerate.h>
 #include <streams.h>
 #include <tinyformat.h>
@@ -202,10 +203,38 @@ struct COutputEntry
 };
 
 
+/** A transaction with a merkle branch linking it to the block chain. */
+class CMerkleTx : public CBaseMerkleTx
+{
+private:
+  /** Constant used in hashBlock to indicate tx has been abandoned */
+    static const uint256 ABANDON_HASH;
 
-/** Moved to auxpow to support merge mining. */
-//class CMerkleTx
+public:
 
+    CMerkleTx() = default;
+
+    explicit CMerkleTx(CTransactionRef arg)
+      : CBaseMerkleTx(arg)
+    {}
+
+    void SetMerkleBranch(const CBlockIndex* pindex, int posInBlock);
+
+    /**
+     * Return depth of transaction in blockchain:
+     * <0  : conflicts with a transaction this deep in the blockchain
+     *  0  : in memory pool, waiting to be included in a block
+     * >=1 : this many blocks deep in the main chain
+     */
+    int GetDepthInMainChain() const;
+    bool IsInMainChain() const { return GetDepthInMainChain() > 0; }
+    int GetBlocksToMaturity() const;
+    bool hashUnset() const { return (hashBlock.IsNull() || hashBlock == ABANDON_HASH); }
+    bool isAbandoned() const { return (hashBlock == ABANDON_HASH); }
+    void setAbandoned() { hashBlock = ABANDON_HASH; }
+
+    bool IsCoinBase() const { return tx->IsCoinBase(); }
+};
 
 /** 
  * A transaction with a bunch of additional info that only the owner cares about.
