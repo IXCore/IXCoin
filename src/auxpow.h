@@ -1,37 +1,44 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2016 Daniel Kraft
+// Copyright (c) 2018 The iXcoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file license.txt or http://www.opensource.org/licenses/mit-license.php.
 
 #ifndef BITCOIN_AUXPOW_H
 #define BITCOIN_AUXPOW_H
 
-#include "consensus/params.h"
-#include "primitives/pureheader.h"
-#include "primitives/transaction.h"
-#include "serialize.h"
-#include "uint256.h"
+#include <consensus/params.h>
+#include <primitives/pureheader.h>
+#include <primitives/transaction.h>
+#include <serialize.h>
+#include <uint256.h>
 
+#include <memory>
 #include <vector>
 
 class CBlock;
 class CBlockHeader;
 class CBlockIndex;
+class CValidationState;
+class UniValue;
+
+namespace auxpow_tests
+{
+class CAuxPowForTest;
+}
 
 /** Header for merge-mining data in the coinbase.  */
 static const unsigned char pchMergedMiningHeader[] = { 0xfa, 0xbe, 'm', 'm' };
 
-/* Because it is needed for auxpow, the definition of CMerkleTx is moved
-   here from wallet.h.  */
-
-/** A transaction with a merkle branch linking it to the block chain. */
-class CMerkleTx : public CTransaction
+/**
+ * Base class for CMerkleTx that just holds the fields and implements
+ * serialisation.  This is the part that is needed for CAuxPow.  The other
+ * functionality, needed by the wallet, is kept in CMerkleTx itself (defined
+ * in wallet/wallet.h as in upstream Bitcoin).
+ */
+class CBaseMerkleTx
 {
-private:
-  /** Constant used in hashBlock to indicate tx has been abandoned */
-    static const uint256 ABANDON_HASH;
-
 public:
     CTransactionRef tx;
     uint256 hashBlock;
@@ -44,17 +51,15 @@ public:
      */
     int nIndex;
 
-    CMerkleTx()
+    CBaseMerkleTx()
     {
         SetTx(MakeTransactionRef());
         Init();
     }
 
-//    CMerkleTx(const CTransaction& txIn) : CTransaction(txIn)
-    explicit CMerkleTx(CTransactionRef arg)
+    explicit CBaseMerkleTx(CTransactionRef arg)
     {
         SetTx(std::move(arg));
-//        SetTx(std::move(txIn));
         Init();
     }
 
@@ -73,60 +78,30 @@ public:
 
     template <typename Stream, typename Operation>
     inline void SerializationOp(Stream& s, Operation ser_action) {
-        std::vector<uint256> vMerkleBranch; // For compatibility with older versions.
-
-        READWRITE(*(CTransaction*)this);
-        nVersion = this->nVersion;
-//        READWRITE(tx);
-
+        READWRITE(tx);
         READWRITE(hashBlock);
         READWRITE(vMerkleBranch);
         READWRITE(nIndex);
     }
 
-    int SetMerkleBranch(const CBlockIndex* pindex, int posInBlock);
-
-    /**
-     * Actually compute the Merkle branch.  This is used for unit tests when
-     * constructing an auxpow.  It is not needed for actual production, since
-     * we do not care in the iXcoin client how the auxpow is constructed
-     * by a miner.
-     */
-    void InitMerkleBranch(const CBlock& block, int posInBlock);
-
-    /**
-     * Return depth of transaction in blockchain:
-     * <0  : conflicts with a transaction this deep in the blockchain
-     *  0  : in memory pool, waiting to be included in a block
-     * >=1 : this many blocks deep in the main chain
-     */
-    int GetDepthInMainChain(const CBlockIndex* &pindexRet) const;
-    int GetDepthInMainChain() const { const CBlockIndex *pindexRet; return GetDepthInMainChain(pindexRet); }
-    bool IsInMainChain() const { const CBlockIndex *pindexRet; return GetDepthInMainChain(pindexRet) > 0; }
-    int GetBlocksToMaturity() const;
-
-    /** Pass this transaction to the mempool. Fails if absolute fee exceeds absurd fee. */
-//    bool AcceptToMemoryPool(bool fLimitFree, const CAmount nAbsurdFee);
-
-    bool hashUnset() const { return (hashBlock.IsNull() || hashBlock == ABANDON_HASH); }
-    bool isAbandoned() const { return (hashBlock == ABANDON_HASH); }
-    void setAbandoned() { hashBlock = ABANDON_HASH; }
-
     const uint256& GetHash() const { return tx->GetHash(); }
-    bool IsCoinBase() const { return tx->IsCoinBase(); }
 };
 
 /**
- * Data for the merge-mining auxpow.  This is a merkle tx (the parent block's
- * coinbase tx) that can be verified to be in the parent block, and this
- * transaction's input (the coinbase script) contains the reference
- * to the actual merge-mined block.
+ * Data for the merge-mining auxpow.  This uses a merkle tx (the parent block's
+ * coinbase tx) and a manual merkle branch to link the actual Namecoin block
+ * header to the parent block header, which is mined to satisfy the PoW.
  */
-class CAuxPow : public CMerkleTx
+class CAuxPow
 {
 
-/* Public for the unit tests.  */
-public:
+private:
+
+  /**
+   * The parent block's coinbase tx, which is used to link the auxpow from
+   * the tx input to the parent block header.
+   */
+  CBaseMerkleTx coinbaseTx;
 
   /** The merkle branch connecting the aux block to our coinbase.  */
   std::vector<uint256> vChainMerkleBranch;
@@ -137,16 +112,25 @@ public:
   /** Parent block header (on which the real PoW is done).  */
   CPureBlockHeader parentBlock;
 
+  /**
+   * Check a merkle branch.  This used to be in CBlock, but was removed
+   * upstream.  Thus include it here now.
+   */
+  static uint256 CheckMerkleBranch (uint256 hash,
+                                    const std::vector<uint256>& vMerkleBranch,
+                                    int nIndex);
+
+  friend UniValue AuxpowToJSON(const CAuxPow& auxpow);
+  friend class auxpow_tests::CAuxPowForTest;
+
 public:
 
   /* Prevent accidental conversion.  */
-  inline explicit CAuxPow (const CTransaction& txIn)
-    : CMerkleTx (txIn)
+  inline explicit CAuxPow (CTransactionRef txIn)
+    : coinbaseTx (txIn)
   {}
 
-  inline CAuxPow ()
-    : CMerkleTx ()
-  {}
+  CAuxPow () = default;
 
   ADD_SERIALIZE_METHODS;
 
@@ -154,9 +138,7 @@ public:
     inline void
     SerializationOp (Stream& s, Operation ser_action)
   {
-    READWRITE (*static_cast<CMerkleTx*> (this));
-    nVersion = this->nVersion;
-
+    READWRITE (coinbaseTx);
     READWRITE (vChainMerkleBranch);
     READWRITE (nChainIndex);
     READWRITE (parentBlock);
@@ -175,14 +157,24 @@ public:
               const Consensus::Params& params) const;
 
   /**
-   * Get the parent block's hash.  This is used to verify that it
-   * satisfies the PoW requirement.
-   * @return The parent block hash.
+   * Returns the parent block hash.  This is used to validate the PoW.
    */
   inline uint256
   getParentBlockHash () const
   {
     return parentBlock.GetHash ();
+  }
+
+  /**
+   * Return parent block.  This is only used for the temporary parentblock
+   * auxpow version check.
+   * @return The parent block.
+   */
+  /* FIXME: Remove after the hardfork.  */
+  inline const CPureBlockHeader&
+  getParentBlock () const
+  {
+    return parentBlock;
   }
 
   /**
@@ -196,21 +188,19 @@ public:
   static int getExpectedIndex (uint32_t nNonce, int nChainId, unsigned h);
 
   /**
-   * Check a merkle branch.  This used to be in CBlock, but was removed
-   * upstream.  Thus include it here now.
+   * Constructs a minimal CAuxPow object for the given block header and
+   * returns it.  The caller should make sure to set the auxpow flag on the
+   * header already, since the block hash to which the auxpow commits depends
+   * on that!
    */
-  static uint256 CheckMerkleBranch (uint256 hash,
-                                    const std::vector<uint256>& vMerkleBranch,
-                                    int nIndex);
+  static std::unique_ptr<CAuxPow> createAuxPow (const CPureBlockHeader& header);
 
   /**
-   * Initialise the auxpow of the given block header.  This constructs
-   * a minimal CAuxPow object with a minimal parent block and sets
-   * it on the block header.  The auxpow is not necessarily valid, but
-   * can be "mined" to make it valid.
-   * @param header The header to set the auxpow on.
+   * Initialises the auxpow of the given block header.  This builds a minimal
+   * auxpow object like createAuxPow and sets it on the block header.  Returns
+   * a reference to the parent header so it can be mined as a follow-up.
    */
-  static void initAuxPow (CBlockHeader& header);
+  static CPureBlockHeader& initAuxPow (CBlockHeader& header);
 
 };
 
