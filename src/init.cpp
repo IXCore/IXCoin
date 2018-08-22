@@ -1424,9 +1424,12 @@ bool AppInitMain()
                 pblocktree.reset(new CBlockTreeDB(nBlockTreeDBCache, false, fReset));
 
 		// init variables for mining fund check
-                pcoinsdbview = new CCoinsViewDB(nCoinDBCache, false, fReindex || fReindexChainState);
-                pcoinscatcher = new CCoinsViewErrorCatcher(pcoinsdbview);
-                pcoinsTip = new CCoinsViewCache(pcoinscatcher);
+                //pcoinsdbview = new CCoinsViewDB(nCoinDBCache, false, fReindex || fReindexChainState);
+                pcoinsdbview.reset(new CCoinsViewDB(nCoinDBCache, false, fReset || fReindexChainState));
+                //pcoinscatcher = new CCoinsViewErrorCatcher(pcoinsdbview);
+                pcoinscatcher.reset(new CCoinsViewErrorCatcher(pcoinsdbview.get()));
+                //pcoinsTip = new CCoinsViewCache(pcoinscatcher);
+		pcoinsTip.reset(new CCoinsViewCache(pcoinscatcher.get()));
 
                 // Initialise the mining fund flag if necessary.  If we have
                 // a completely fresh chainstate, then we set it to the premine
