@@ -1418,7 +1418,8 @@ bool CheckTxInputs(const CTransaction& tx, CValidationState& state, const CCoins
         for (unsigned int i = 0; i < tx.vin.size(); i++)
         {
             const COutPoint &prevout = tx.vin[i].prevout;
-            const CCoins *coins = inputs.AccessCoins(prevout.hash);
+//            const CCoins *coins = inputs.AccessCoins(prevout.hash);
+            const Coin *coins = inputs.AccessCoins(prevout.hash);
             assert(coins);
 
             // Lock the coinbases of the first 6,050 blocks.  This removes
