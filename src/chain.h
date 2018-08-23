@@ -1,5 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2017 The Bitcoin Core developers
+// Copyright (c) 2017-2018 The iXcoin Core Developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -7,7 +8,6 @@
 #define BITCOIN_CHAIN_H
 
 #include <arith_uint256.h>
-#include <consensus/params.h>
 #include <primitives/block.h>
 #include <pow.h>
 #include <tinyformat.h>
@@ -248,7 +248,7 @@ public:
         SetNull();
     }
 
-    CBlockIndex(const CBlockHeader& block)
+    explicit CBlockIndex(const CBlockHeader& block)
     {
         SetNull();
 
@@ -277,9 +277,7 @@ public:
         return ret;
     }
 
-
- // Moved CBlockHeader to chain.cpp
- /*CBlockHeader GetBlockHeader() const
+    CBlockHeader GetBlockHeader() const
     {
         CBlockHeader block;
         block.nVersion       = nVersion;
@@ -291,8 +289,6 @@ public:
         block.nNonce         = nNonce;
         return block;
     }
- */   
- CBlockHeader GetBlockHeader(const Consensus::Params& consensusParams) const;
 
     uint256 GetBlockHash() const
     {
