@@ -14,7 +14,7 @@
 #include <consensus/validation.h>
 #include <hash.h>
 //#include "main.h"
-#include <new_processing.h>
+#include <net_processing.h>
 #include <validation.h>
 
 #include <script/script.h>
