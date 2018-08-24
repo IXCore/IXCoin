@@ -1419,7 +1419,7 @@ bool CheckTxInputs(const CTransaction& tx, CValidationState& state, const CCoins
         {
             const COutPoint &prevout = tx.vin[i].prevout;
 //            const CCoins *coins = inputs.AccessCoins(prevout.hash);
-            const Coin *coins = inputs.AccessCoin(prevout);
+            const Coin *coins = inputs.AccessCoin(prevout.hash);
             assert(coins);
 
             // Lock the coinbases of the first 6,050 blocks.  This removes
@@ -1445,8 +1445,10 @@ bool CheckTxInputs(const CTransaction& tx, CValidationState& state, const CCoins
             }
 
             // Check for negative or overflow input values
-            nValueIn += coins->vout[prevout.n].nValue;
-            if (!MoneyRange(coins->vout[prevout.n].nValue) || !MoneyRange(nValueIn))
+//            nValueIn += coins->vout[prevout.n].nValue;
+//            if (!MoneyRange(coins->vout[prevout.n].nValue) || !MoneyRange(nValueIn))
+            nValueIn += coins->out[prevout.n].nValue;
+            if (!MoneyRange(coins->out[prevout.n].nValue) || !MoneyRange(nValueIn))
                 return state.DoS(100, false, REJECT_INVALID, "bad-txns-inputvalues-outofrange");
 
         }
@@ -1476,6 +1478,7 @@ void InitScriptExecutionCache() {
     size_t nElems = scriptExecutionCache.setup_bytes(nMaxCacheSize);
     LogPrintf("Using %zu MiB out of %zu/2 requested for script execution cache, able to store %zu elements\n",
             (nElems*sizeof(uint256)) >>20, (nMaxCacheSize*2)>>20, nElems);
+}
 
 /**
  * Check whether all inputs of this transaction are valid (no double spends, scripts & sigs, amounts)
