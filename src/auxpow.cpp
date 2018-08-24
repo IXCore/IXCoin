@@ -2,12 +2,11 @@
 // Copyright (c) 2011 Vince Durham
 // Copyright (c) 2009-2014 The Bitcoin developers
 // Copyright (c) 2014-2016 Daniel Kraft
-// Copyright (c) 2017-20148 The iXcoin developers
+// Copyright (c) 2017-2018 The iXcoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file license.txt or http://www.opensource.org/licenses/mit-license.php.
 
 #include <auxpow.h>
-
 #include <compat/endian.h>
 #include <consensus/consensus.h>
 #include <consensus/merkle.h>
