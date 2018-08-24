@@ -1418,37 +1418,37 @@ bool CheckTxInputs(const CTransaction& tx, CValidationState& state, const CCoins
         for (unsigned int i = 0; i < tx.vin.size(); i++)
         {
 	    const COutPoint &prevout = tx.vin[i].prevout;
-            const Coin& coin = inputs.AccessCoin(prevout);
+            const Coin *coins = inputs.AccessCoin(prevout);
 //            const CCoins *coins = inputs.AccessCoins(prevout.hash);
-            assert(coin);
+            assert(coins);
 
             // Lock the coinbases of the first 6,050 blocks.  This removes
             // the premine that is present in iXcoin.
-            if (coin->nHeight <= 6050 && coin->IsCoinBase()) {
+            if (coins->nHeight <= 6050 && coins->IsCoinBase()) {
               if (nSpendHeight > 250000) {
                 return state.Invalid(false,
                     REJECT_INVALID, "blocked-premine-spent",
                     strprintf("tried to spend blocked premine of depth %d at height %d",
-                              coin->nHeight, nSpendHeight));
+                              coins->nHeight, nSpendHeight));
               } else {
                 LogPrintf("WARNING: blocked premine of depth %d spent at height %d\n", 
-                          coin->nHeight, nSpendHeight);
+                          coins->nHeight, nSpendHeight);
               }
             }
 
             // If prev is coinbase, check that it's matured
-            if (coin->IsCoinBase()) {
-                if (nSpendHeight - coin->nHeight < COINBASE_MATURITY)
+            if (coins->IsCoinBase()) {
+                if (nSpendHeight - coins->nHeight < COINBASE_MATURITY)
                     return state.Invalid(false,
                         REJECT_INVALID, "bad-txns-premature-spend-of-coinbase",
-                        strprintf("tried to spend coinbase at depth %d", nSpendHeight - coin->nHeight));
+                        strprintf("tried to spend coinbase at depth %d", nSpendHeight - coins->nHeight));
             }
 
             // Check for negative or overflow input values
-//            nValueIn += coin->vout[prevout.n].nValue;
-//            if (!MoneyRange(coin->vout[prevout.n].nValue) || !MoneyRange(nValueIn))
-            nValueIn += coin->out[prevout.n].nValue;
-            if (!MoneyRange(coin->out[prevout.n].nValue) || !MoneyRange(nValueIn))
+//            nValueIn += coisn->vout[prevout.n].nValue;
+//            if (!MoneyRange(coins->vout[prevout.n].nValue) || !MoneyRange(nValueIn))
+            nValueIn += coins->out[prevout.n].nValue;
+            if (!MoneyRange(coins->out[prevout.n].nValue) || !MoneyRange(nValueIn))
                 return state.DoS(100, false, REJECT_INVALID, "bad-txns-inputvalues-outofrange");
 
         }
