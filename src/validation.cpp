@@ -1424,31 +1424,31 @@ bool CheckTxInputs(const CTransaction& tx, CValidationState& state, const CCoins
 
             // Lock the coinbases of the first 6,050 blocks.  This removes
             // the premine that is present in iXcoin.
-            if (coins->nHeight <= 6050 && coins->IsCoinBase()) {
+            if (coins.nHeight <= 6050 && coins.IsCoinBase()) {
               if (nSpendHeight > 250000) {
                 return state.Invalid(false,
                     REJECT_INVALID, "blocked-premine-spent",
                     strprintf("tried to spend blocked premine of depth %d at height %d",
-                              coins->nHeight, nSpendHeight));
+                              coins.nHeight, nSpendHeight));
               } else {
                 LogPrintf("WARNING: blocked premine of depth %d spent at height %d\n", 
-                          coins->nHeight, nSpendHeight);
+                          coins.nHeight, nSpendHeight);
               }
             }
 
             // If prev is coinbase, check that it's matured
-            if (coins->IsCoinBase()) {
-                if (nSpendHeight - coins->nHeight < COINBASE_MATURITY)
+            if (coins.IsCoinBase()) {
+                if (nSpendHeight - coins.nHeight < COINBASE_MATURITY)
                     return state.Invalid(false,
                         REJECT_INVALID, "bad-txns-premature-spend-of-coinbase",
-                        strprintf("tried to spend coinbase at depth %d", nSpendHeight - coins->nHeight));
+                        strprintf("tried to spend coinbase at depth %d", nSpendHeight - coins.nHeight));
             }
 
             // Check for negative or overflow input values
-//            nValueIn += coisn->vout[prevout.n].nValue;
+//            nValueIn += coins->vout[prevout.n].nValue;
 //            if (!MoneyRange(coins->vout[prevout.n].nValue) || !MoneyRange(nValueIn))
-            nValueIn += coins->out.vout[prevout.n].nValue;
-            if (!MoneyRange(coins->out.vout[prevout.n].nValue) || !MoneyRange(nValueIn))
+            nValueIn += coins.out.vout[prevout.n].nValue;
+            if (!MoneyRange(coins.out.vout[prevout.n].nValue) || !MoneyRange(nValueIn))
                 return state.DoS(100, false, REJECT_INVALID, "bad-txns-inputvalues-outofrange");
 
         }
