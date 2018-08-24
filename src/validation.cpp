@@ -1418,9 +1418,9 @@ bool CheckTxInputs(const CTransaction& tx, CValidationState& state, const CCoins
         for (unsigned int i = 0; i < tx.vin.size(); i++)
         {
 	    const COutPoint &prevout = tx.vin[i].prevout;
-            const Coin *coins = inputs.AccessCoin(prevout);
+            const Coin& coins = inputs.AccessCoin(prevout);
 //            const CCoins *coins = inputs.AccessCoins(prevout.hash);
-            assert(coins);
+//            assert(coins);
 
             // Lock the coinbases of the first 6,050 blocks.  This removes
             // the premine that is present in iXcoin.
@@ -1447,8 +1447,8 @@ bool CheckTxInputs(const CTransaction& tx, CValidationState& state, const CCoins
             // Check for negative or overflow input values
 //            nValueIn += coisn->vout[prevout.n].nValue;
 //            if (!MoneyRange(coins->vout[prevout.n].nValue) || !MoneyRange(nValueIn))
-            nValueIn += coins->out[prevout.n].nValue;
-            if (!MoneyRange(coins->out[prevout.n].nValue) || !MoneyRange(nValueIn))
+            nValueIn += coins->out.vout[prevout.n].nValue;
+            if (!MoneyRange(coins->out.vout[prevout.n].nValue) || !MoneyRange(nValueIn))
                 return state.DoS(100, false, REJECT_INVALID, "bad-txns-inputvalues-outofrange");
 
         }
