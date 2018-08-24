@@ -64,7 +64,7 @@ public:
     {
 //        SetTx(std::move(arg));
 //        SetTx(std::move(txIn));
-        SetTx(txIn);
+        SetTx(txIn&);
         Init();
     }
 
