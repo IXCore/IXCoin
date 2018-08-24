@@ -51,12 +51,13 @@ public:
         Init();
     }
 
-//*********
+/*********
     explicit CMerkleTx(CTransactionRef arg)
     {
         SetTx(std::move(arg));
         Init();
     }
+*/
 
     CMerkleTx(const CTransaction& txIn) : CTransaction(txIn)
 //    explicit CMerkleTx(CTransactionRef arg)
