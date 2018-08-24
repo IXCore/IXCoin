@@ -1447,8 +1447,8 @@ bool CheckTxInputs(const CTransaction& tx, CValidationState& state, const CCoins
             // Check for negative or overflow input values
 //            nValueIn += coins->vout[prevout.n].nValue;
 //            if (!MoneyRange(coins->vout[prevout.n].nValue) || !MoneyRange(nValueIn))
-            nValueIn += coins.out.vout[prevout.n].nValue;
-            if (!MoneyRange(coins.out.vout[prevout.n].nValue) || !MoneyRange(nValueIn))
+            nValueIn += coins.out.nValue;
+            if (!MoneyRange(coins.out.nValue) || !MoneyRange(nValueIn))
                 return state.DoS(100, false, REJECT_INVALID, "bad-txns-inputvalues-outofrange");
 
         }
@@ -2013,7 +2013,8 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
     assert(pindex->pprev);
     CBlockIndex *pindexBIP34height = pindex->pprev->GetAncestor(chainparams.GetConsensus().BIP34Height);
     //Only continue to enforce if we're below BIP34 activation height or the block hash at that height doesn't correspond.
-    fEnforceBIP30 = fEnforceBIP30 && (!pindexBIP34height || !(pindexBIP34height->GetBlockHash() == chainparams.GetConsensus().BIP34Hash));
+    fEnforceBIP30 = fEnforceBIP30 && !pindexBIP34height;
+//    fEnforceBIP30 = fEnforceBIP30 && (!pindexBIP34height || !(pindexBIP34height->GetBlockHash() == chainparams.GetConsensus().BIP34Hash));
 
     if (fEnforceBIP30) {
         for (const auto& tx : block.vtx) {
@@ -2032,7 +2033,7 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
     //bool fStrictPayToScriptHash = (pindex->GetBlockTime() >= nBIP16SwitchTime);
 //    bool fStrictPayToScriptHash = false;
 
-    unsigned int flags = fStrictPayToScriptHash ? SCRIPT_VERIFY_P2SH : SCRIPT_VERIFY_NONE;
+//    unsigned int flags = fStrictPayToScriptHash ? SCRIPT_VERIFY_P2SH : SCRIPT_VERIFY_NONE;
 
     // Start enforcing the DERSIG (BIP66) rule
 //    if (pindex->nHeight >= chainparams.GetConsensus().BIP66Height) {
@@ -2145,11 +2146,11 @@ bool CChainState::ConnectBlock(const CBlock& block, CValidationState& state, CBl
 
     const CAmount blockReward = nFees + GetBlockSubsidy(pindex->nHeight, chainparams.GetConsensus());
     const CAmount maxFundSubsidy = GetMiningFundSubsidy(pindex->nHeight, view, chainparams.GetConsensus());
-    const CAmount fundUsage = block.vtx[0].GetValueOut() - blockReward;
+    const CAmount fundUsage = block.vtx[0]->GetValueOut() - blockReward;
     if (fundUsage > maxFundSubsidy)
         return state.DoS(100,
                          error("ConnectBlock(): coinbase pays too much (actual=%d vs limit=%d)",
-                               block.vtx[0].GetValueOut(),
+                               block.vtx[0]->GetValueOut(),
                                blockReward + maxFundSubsidy),
                                REJECT_INVALID, "bad-cb-amount");
     if (fundUsage > 0)
