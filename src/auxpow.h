@@ -63,7 +63,8 @@ public:
 //    explicit CMerkleTx(CTransactionRef arg)
     {
 //        SetTx(std::move(arg));
-        SetTx(std::move(txIn));
+//        SetTx(std::move(txIn));
+        SetTx(txIn);
         Init();
     }
 
