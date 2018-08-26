@@ -35,8 +35,11 @@ CAuxPow::check (const uint256& hashAuxBlock, int nChainId,
     // Check that the chain merkle root is in the coinbase
     const uint256 nRootHash
       = CheckMerkleBranch (hashAuxBlock, vChainMerkleBranch, nChainIndex);
+
+//
     valtype vchRootHash(nRootHash.begin (), nRootHash.end ());
     std::reverse (vchRootHash.begin (), vchRootHash.end ()); // correct endian
+
 
     // Check that we are in the parent block merkle tree
     if (CheckMerkleBranch(coinbaseTx.GetHash(), coinbaseTx.vMerkleBranch,
@@ -151,6 +154,8 @@ CAuxPow::createAuxPow (const CPureBlockHeader& header)
 
   /* Build a minimal coinbase script input for merge-mining.  */
   const uint256 blockHash = header.GetHash ();
+
+//
   valtype inputData(blockHash.begin (), blockHash.end ());
   std::reverse (inputData.begin (), inputData.end ());
   inputData.push_back (1);
