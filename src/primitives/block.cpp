@@ -11,7 +11,8 @@
 #include <utilstrencodings.h>
 #include <crypto/common.h>
 
-void CBlockHeader::SetAuxpow (CAuxPow* apow)
+//void CBlockHeader::SetAuxpow (CAuxPow* apow)
+void CBlockHeader::SetAuxpow (std::unique_ptr<CAuxPow> apow)
 {
     if (apow)
     {
