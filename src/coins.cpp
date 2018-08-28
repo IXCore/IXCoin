@@ -46,7 +46,7 @@ bool CCoins::Spend(uint32_t nPos)
 bool CCoinsView::GetCoin(const COutPoint &outpoint, Coin &coin) const { return false; }
 uint256 CCoinsView::GetBestBlock() const { return uint256(); }
 
-CAmount CCoinsView::GetMiningFund() const { return uint32_t; }
+CAmount CCoinsView::GetMiningFund() const { return uint32_t(); }
 //CAmount CCoinsView::GetMiningFund() const { return nullptr; }
 std::vector<uint256> CCoinsView::GetHeadBlocks() const { return std::vector<uint256>(); }
 bool CCoinsView::BatchWrite(CCoinsMap &mapCoins, const CAmount miningFund, const uint256 &hashBlock) { return false; }
