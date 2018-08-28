@@ -138,9 +138,9 @@ public:
         // service bits we want, but we should get them updated to support all service bits wanted by any
         // release ASAP to avoid it where possible.
         // FIXME non-operable
-        vSeeds.emplace_back(CDNSSeedData("seed.uk.ixcoin.co");
-        vSeeds.emplace_back(CDNSSeedData("seed.ixcoin.co");
-        vSeeds.emplace_back(CDNSSeedData("dnsseed.agp.ixcoin.co");
+        vSeeds.emplace_back("seed.uk.ixcoin.co");
+        vSeeds.emplace_back("seed.ixcoin.co");
+        vSeeds.emplace_back("dnsseed.agp.ixcoin.co");
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,138);
 	//set script address leading char to y

@@ -15,6 +15,7 @@
  * each bit in the bitmask represents the availability of one output, but the
  * availabilities of the first two outputs are encoded separately
  */
+/*
 void CCoins::CalcMaskSize(unsigned int &nBytes, unsigned int &nNonzeroBytes) const {
     unsigned int nLastUsedByte = 0;
     for (unsigned int b = 0; 2+b*8 < vout.size(); b++) {
@@ -41,10 +42,12 @@ bool CCoins::Spend(uint32_t nPos)
     Cleanup();
     return true;
 }
-
+*/
 bool CCoinsView::GetCoin(const COutPoint &outpoint, Coin &coin) const { return false; }
 uint256 CCoinsView::GetBestBlock() const { return uint256(); }
-CAmount CCoinsView::GetMiningFund() const { return nullptr; }
+
+CAmount CCoinsView::GetMiningFund() const { return uint256(); }
+//CAmount CCoinsView::GetMiningFund() const { return nullptr; }
 std::vector<uint256> CCoinsView::GetHeadBlocks() const { return std::vector<uint256>(); }
 bool CCoinsView::BatchWrite(CCoinsMap &mapCoins, const CAmount miningFund, const uint256 &hashBlock) { return false; }
 CCoinsViewCursor *CCoinsView::Cursor() const { return nullptr; }
@@ -68,12 +71,13 @@ size_t CCoinsViewBacked::EstimateSize() const { return base->EstimateSize(); }
 
 SaltedOutpointHasher::SaltedOutpointHasher() : k0(GetRand(std::numeric_limits<uint64_t>::max())), k1(GetRand(std::numeric_limits<uint64_t>::max())) {}
 
-CCoinsViewCache::CCoinsViewCache(CCoinsView *baseIn) : CCoinsViewBacked(baseIn), hasModifier(false), miningFund(-1), cachedCoinsUsage(0) { }
+CCoinsViewCache::CCoinsViewCache(CCoinsView *baseIn) : CCoinsViewBacked(baseIn), cachedCoinsUsage(0) {}
+//CCoinsViewCache::CCoinsViewCache(CCoinsView *baseIn) : CCoinsViewBacked(baseIn), hasModifier(false), miningFund(-1), cachedCoinsUsage(0) {}
 
-CCoinsViewCache::~CCoinsViewCache()
-{
-    assert(!hasModifier);
-}
+//CCoinsViewCache::~CCoinsViewCache()
+//{
+//    assert(!hasModifier);
+//}
 
 size_t CCoinsViewCache::DynamicMemoryUsage() const {
     return memusage::DynamicUsage(cacheCoins) + cachedCoinsUsage;
@@ -195,7 +199,7 @@ void CCoinsViewCache::SetMiningFund(const CAmount miningFundIn) {
 }
 
 bool CCoinsViewCache::BatchWrite(CCoinsMap &mapCoins, const CAmount miningFundIn, const uint256 &hashBlockIn) {
-    assert(!hasModifier);
+//    assert(!hasModifier);
     for (CCoinsMap::iterator it = mapCoins.begin(); it != mapCoins.end(); it = mapCoins.erase(it)) {
         // Ignore non-dirty entries (optimization).
         if (!(it->second.flags & CCoinsCacheEntry::DIRTY)) {
