@@ -325,7 +325,7 @@ public:
         fDefaultConsistencyChecks = true;
         fRequireStandard = false;
         fMineBlocksOnDemand = true;
-        fTestnetToBeDeprecatedFieldRPC = false;
+        //fTestnetToBeDeprecatedFieldRPC = false;
 
         checkpointData = {
             {
