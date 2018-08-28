@@ -101,7 +101,7 @@ std::string ChainNameFromCommandLine()
     return CBaseChainParams::MAIN;
 }
 
-bool AreBaseParamsConfigured()
-{
-    return pCurrentBaseParams != NULL;
-}
+//bool AreBaseParamsConfigured()
+//{
+//    return pCurrentBaseParams != NULL;
+//}
