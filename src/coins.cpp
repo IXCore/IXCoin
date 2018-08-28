@@ -318,6 +318,7 @@ const Coin& AccessByTxid(const CCoinsViewCache& view, const uint256& txid)
     return coinEmpty;
 }
 
+/*
 double CCoinsViewCache::GetPriority(const CTransaction &tx, int nHeight, CAmount &inChainInputValue) const
 {
     inChainInputValue = 0;
@@ -359,3 +360,4 @@ CCoinsModifier::~CCoinsModifier()
 CCoinsViewCursor::~CCoinsViewCursor()
 {
 }
+*/

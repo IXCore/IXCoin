@@ -132,9 +132,15 @@ public:
         assert(consensus.hashGenesisBlock == uint256S("0x0000000001534ef8893b025b9c1da67250285e35c9f76cae36a4904fdf72c591"));
         assert(genesis.hashMerkleRoot == uint256S("0xcb3ae7b867c97ceb834c5d131355cd4bc176a44360fede9ed6d47b897397ba3f"));
 
-        vSeeds.push_back(CDNSSeedData("ixcoin.co", "uk.ixcoin.co"));
-        vSeeds.push_back(CDNSSeedData("ixcoin.co", "nyc.ixcoin.co"));
-        vSeeds.push_back(CDNSSeedData("ixcoin.co", "sgp.ixcoin.co"));
+        // Note that of those which support the service bits prefix, most only support a subset of
+        // possible options.
+        // This is fine at runtime as we'll fall back to using them as a oneshot if they dont support the
+        // service bits we want, but we should get them updated to support all service bits wanted by any
+        // release ASAP to avoid it where possible.
+        // FIXME non-operable
+        vSeeds.emplace_back(CDNSSeedData("seed.uk.ixcoin.co");
+        vSeeds.emplace_back(CDNSSeedData("seed.ixcoin.co");
+        vSeeds.emplace_back(CDNSSeedData("dnsseed.agp.ixcoin.co");
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,138);
 	//set script address leading char to y
