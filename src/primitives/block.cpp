@@ -14,6 +14,18 @@
 //void CBlockHeader::SetAuxpow (CAuxPow* apow)
 void CBlockHeader::SetAuxpow (std::unique_ptr<CAuxPow> apow)
 {
+    if (apow != nullptr)
+    {
+        auxpow.reset(apow.release());
+        SetAuxpowVersion(true);
+    } else
+    {
+        auxpow.reset();
+        SetAuxpowVersion(false);
+    }
+}
+
+/*{
     if (apow)
     {
         auxpow.reset(apow);
@@ -23,7 +35,7 @@ void CBlockHeader::SetAuxpow (std::unique_ptr<CAuxPow> apow)
         auxpow.reset();
         SetAuxpowVersion(false);
     }
-}
+}*/
 
 std::string CBlock::ToString() const
 {
