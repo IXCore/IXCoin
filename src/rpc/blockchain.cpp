@@ -83,7 +83,12 @@ double GetDifficulty(const CChain& chain, const CBlockIndex* blockindex)
     return dDiff;
 }
 
-static UniValue AuxpowToJSON(const CAuxPow& auxpow)
+double GetDifficulty(const CBlockIndex* blockindex)
+{
+    return GetDifficulty(chainActive, blockindex);
+}
+
+UniValue AuxpowToJSON(const CAuxPow& auxpow)
 {
     UniValue tx(UniValue::VOBJ);
     tx.push_back(Pair("hex", EncodeHexTx(auxpow)));
