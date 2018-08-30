@@ -104,19 +104,19 @@ UniValue AuxpowToJSON(const CAuxPow& auxpow)
         result.push_back(Pair("tx", tx));
     }
 
-    result.push_back(Pair("index", auxpow.nIndex));
+    result.push_back(Pair("index", auxpow.coinbaseTx.nIndex));
     result.push_back(Pair("chainindex", auxpow.nChainIndex));
 
     {
         UniValue branch(UniValue::VARR);
-        BOOST_FOREACH(const uint256& node, auxpow.vMerkleBranch)
+        for (const auto& node : auxpow.coinbaseTx.vMerkleBranch)
             branch.push_back(node.GetHex());
         result.push_back(Pair("merklebranch", branch));
     }
 
     {
         UniValue branch(UniValue::VARR);
-        BOOST_FOREACH(const uint256& node, auxpow.vChainMerkleBranch)
+        for (const auto& node : auxpow.vChainMerkleBranch)
             branch.push_back(node.GetHex());
         result.push_back(Pair("chainmerklebranch", branch));
     }
