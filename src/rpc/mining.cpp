@@ -1020,7 +1020,8 @@ UniValue getauxblock(const UniValue& params, bool fHelp)
             + HelpExampleRpc("getauxblock", "")
             );
 
-    boost::shared_ptr<CReserveScript> coinbaseScript;
+//    boost::shared_ptr<CReserveScript> coinbaseScript;
+    const std::shared_ptr<CReserveScript> coinbaseScript;
     GetMainSignals().ScriptForMining(coinbaseScript);
 
     // If the keypool is exhausted, no script is returned at all.  Catch this.
@@ -1112,7 +1113,8 @@ UniValue getauxblock(const UniValue& params, bool fHelp)
         result.push_back(Pair("hash", pblock->GetHash().GetHex()));
         result.push_back(Pair("chainid", pblock->GetChainId()));
         result.push_back(Pair("previousblockhash", pblock->hashPrevBlock.GetHex()));
-        result.push_back(Pair("coinbasevalue", (int64_t)pblock->vtx[0].vout[0].nValue));
+//        result.push_back(Pair("coinbasevalue", (int64_t)pblock->vtx[0].vout[0].nValue));
+        result.push_back(Pair("coinbasevalue", (int64_t)pblock->vtx[0]->vout[0].nValue));
         result.push_back(Pair("bits", strprintf("%08x", pblock->nBits)));
         result.push_back(Pair("height", static_cast<int64_t> (pindexPrev->nHeight + 1)));
         result.push_back(Pair("_target", HexStr(BEGIN(target), END(target))));
@@ -1134,9 +1136,17 @@ UniValue getauxblock(const UniValue& params, bool fHelp)
 
     const std::vector<unsigned char> vchAuxPow = ParseHex(params[1].get_str());
     CDataStream ss(vchAuxPow, SER_GETHASH, PROTOCOL_VERSION);
+
+//    std::unique_ptr<CAuxPow> pow;
+//  std::unique_ptr<CAuxPow> apow = createAuxPow (header);
+//  CPureBlockHeader& result = apow->parentBlock;
+//  header.SetAuxpow (std::move (apow));
+//
     CAuxPow pow;
     ss >> pow;
-    block.SetAuxpow(new CAuxPow(pow));
+//    block.SetAuxpow(new CAuxPow(pow));
+    block.SetAuxpow(createAuxPow (pow));
+
     assert(block.GetHash() == hash);
 
     CValidationState state;
