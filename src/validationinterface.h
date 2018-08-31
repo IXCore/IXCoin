@@ -160,6 +160,9 @@ public:
     void Inventory(const uint256 &);
     void Broadcast(int64_t nBestBlockTime, CConnman* connman);
     void BlockChecked(const CBlock&, const CValidationState&);
+    /** Notifies listeners that a key for mining is required (coinbase) */
+    void ScriptForMining(const std::shared_ptr<const CReserveScript>&);
+    
     void NewPoWValidBlock(const CBlockIndex *, const std::shared_ptr<const CBlock>&);
 };
 

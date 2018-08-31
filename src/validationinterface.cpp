@@ -84,11 +84,13 @@ void RegisterValidationInterface(CValidationInterface* pwalletIn) {
     g_signals.m_internals->Inventory.connect(boost::bind(&CValidationInterface::Inventory, pwalletIn, _1));
     g_signals.m_internals->Broadcast.connect(boost::bind(&CValidationInterface::ResendWalletTransactions, pwalletIn, _1, _2));
     g_signals.m_internals->BlockChecked.connect(boost::bind(&CValidationInterface::BlockChecked, pwalletIn, _1, _2));
+    g_signals.m_internals->ScriptForMining.connect(boost::bind(&CValidationInterface::GetScriptForMining, pwalletIn, _1));
     g_signals.m_internals->NewPoWValidBlock.connect(boost::bind(&CValidationInterface::NewPoWValidBlock, pwalletIn, _1, _2));
 }
 
 void UnregisterValidationInterface(CValidationInterface* pwalletIn) {
     g_signals.m_internals->BlockChecked.disconnect(boost::bind(&CValidationInterface::BlockChecked, pwalletIn, _1, _2));
+    g_signals.m_internals->ScriptForMining.disconnect(boost::bind(&CValidationInterface::GetScriptForMining, pwalletIn, _1));
     g_signals.m_internals->Broadcast.disconnect(boost::bind(&CValidationInterface::ResendWalletTransactions, pwalletIn, _1, _2));
     g_signals.m_internals->Inventory.disconnect(boost::bind(&CValidationInterface::Inventory, pwalletIn, _1));
     g_signals.m_internals->SetBestChain.disconnect(boost::bind(&CValidationInterface::SetBestChain, pwalletIn, _1));
@@ -105,6 +107,7 @@ void UnregisterAllValidationInterfaces() {
         return;
     }
     g_signals.m_internals->BlockChecked.disconnect_all_slots();
+    g_signals.m_internals->ScriptForMining.disconnect_all_slots();
     g_signals.m_internals->Broadcast.disconnect_all_slots();
     g_signals.m_internals->Inventory.disconnect_all_slots();
     g_signals.m_internals->SetBestChain.disconnect_all_slots();
