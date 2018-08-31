@@ -116,6 +116,7 @@ protected:
      * callback was generated (not necessarily now)
      */
     virtual void BlockChecked(const CBlock&, const CValidationState&) {}
+    virtual void GetScriptForMining(const std::shared_ptr<CReserveScript>&) {};
     /**
      * Notifies listeners that a block which builds directly on our current tip
      * has been received and connected to the headers tree, though not validated yet */
