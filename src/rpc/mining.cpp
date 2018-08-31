@@ -1152,8 +1152,16 @@ UniValue getauxblock(const UniValue& params, bool fHelp)
     CValidationState state;
     submitblock_StateCatcher sc(block.GetHash());
     RegisterValidationInterface(&sc);
-    bool fAccepted = ProcessNewBlock(state, Params(), nullptr, &block,
-                                     true, nullptr, g_connman.get());
+//!ProcessNewBlock(Params(), shared_pblock, true, nullptr
+
+//bool ProcessNewBlock(const CChainParams& chainparams, 
+//const std::shared_ptr<const CBlock> pblock, bool fForceProcessing, bool *fNewBlock)
+
+
+    bool fAccepted = ProcessNewBlock(Params(), &block, true, nullptr);
+//    bool fAccepted = ProcessNewBlock(state, Params(), nullptr, &block,
+//                                     true, nullptr, g_connman.get());
+
     UnregisterValidationInterface(&sc);
 
     if (fAccepted)
