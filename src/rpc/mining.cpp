@@ -1137,15 +1137,13 @@ UniValue getauxblock(const UniValue& params, bool fHelp)
     const std::vector<unsigned char> vchAuxPow = ParseHex(params[1].get_str());
     CDataStream ss(vchAuxPow, SER_GETHASH, PROTOCOL_VERSION);
 
-//    std::unique_ptr<CAuxPow> pow;
-//  std::unique_ptr<CAuxPow> apow = createAuxPow (header);
-//  CPureBlockHeader& result = apow->parentBlock;
-//  header.SetAuxpow (std::move (apow));
 //
-    CAuxPow pow;
+    std::unique_ptr<CAuxPow> pow = createAuxPow (block.header);
     ss >> pow;
+    block.SetAuxpow (std::move (pow));
+//    CAuxPow pow;
+//    ss >> pow;
 //    block.SetAuxpow(new CAuxPow(pow));
-    block.SetAuxpow(createAuxPow (pow));
 
     assert(block.GetHash() == hash);
 
@@ -1170,7 +1168,7 @@ static const CRPCCommand commands[] =
     { "mining",             "getnetworkhashps",       &getnetworkhashps,       {"nblocks","height"} },
     { "mining",             "getmininginfo",          &getmininginfo,          {} },
     { "mining",             "prioritisetransaction",  &prioritisetransaction,  {"txid","dummy","fee_delta"} },
-    { "mining",             "getblocktemplate",       &getblocktemplate,       {"template_request"} },
+ //   { "mining",             "getblocktemplate",       &getblocktemplate,       {"template_request"} },
     { "mining",             "submitblock",            &submitblock,            {"hexdata","dummy"} },
     { "mining",             "getauxblock",            &getauxblock,            {} }, // *****
 
