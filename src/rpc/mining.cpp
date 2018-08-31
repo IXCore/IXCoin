@@ -1138,7 +1138,7 @@ UniValue getauxblock(const UniValue& params, bool fHelp)
     CDataStream ss(vchAuxPow, SER_GETHASH, PROTOCOL_VERSION);
 
 //
-    std::unique_ptr<CAuxPow> pow = createAuxPow (block.header);
+    std::unique_ptr<CAuxPow> pow = createAuxPow (block.GetBlockHeader());
     ss >> pow;
     block.SetAuxpow (std::move (pow));
 //    CAuxPow pow;
