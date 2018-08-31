@@ -231,7 +231,7 @@ UniValue validateaddress(const JSONRPCRequest& request)
 }
 
 // Needed even with !ENABLE_WALLET, to pass (ignored) pointers around
-class CWallet;
+//class CWallet;
 
 UniValue createmultisig(const JSONRPCRequest& request)
 {
