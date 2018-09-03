@@ -1133,7 +1133,9 @@ UniValue getauxblock(const UniValue& params, bool fHelp)
     const std::map<uint256, CBlock*>::iterator mit = mapNewBlock.find(hash);
     if (mit == mapNewBlock.end())
         throw JSONRPCError(RPC_INVALID_PARAMETER, "block hash unknown");
-    CBlock& block = *mit->second;
+
+    std::shared_ptr<const CBlock> block = *mit->second;
+//  CBlock& block = *mit->second;
 
     const std::vector<unsigned char> vchAuxPow = ParseHex(params[1].get_str());
     CDataStream ss(vchAuxPow, SER_GETHASH, PROTOCOL_VERSION);
