@@ -405,7 +405,7 @@ UniValue getaddressesbyaccount(const JSONRPCRequest& request)
 
 static void SendMoneyToScript(const CScript &scriptPubKey, CAmount nValue, bool fSubtractFeeFromAmount, CWalletTx& wtxNew)
 {
-    CAmount curBalance = pwalletMain->GetBalance();
+    CAmount curBalance = pwallet->GetBalance();
 
     // Check amount
     if (nValue <= 0)
@@ -421,7 +421,7 @@ static void SendMoneyToScript(const CScript &scriptPubKey, CAmount nValue, bool 
     CReserveKey reservekey(pwalletMain);
     CAmount nFeeRequired;
     std::string strError;
-    vector<CRecipient> vecSend;
+    std::vector<CRecipient> vecSend;
     int nChangePosRet = -1;
     CRecipient recipient = {scriptPubKey, nValue, fSubtractFeeFromAmount};
     vecSend.push_back(recipient);
