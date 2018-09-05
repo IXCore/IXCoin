@@ -5,6 +5,7 @@
 #ifndef BITCOIN_WALLET_RPCWALLET_H
 #define BITCOIN_WALLET_RPCWALLET_H
 
+#include <map>
 #include <string>
 
 class CCoinControl;
@@ -12,6 +13,11 @@ class CRPCTable;
 class CWallet;
 class CWalletTx;
 class JSONRPCRequest;
+class UniValue;
+struct PartiallySignedTransaction;
+class CTransaction;
+
+typedef std::map<std::string, std::string> mapValue_t;
 
 void RegisterWalletRPCCommands(CRPCTable &t);
 
