@@ -403,12 +403,13 @@ UniValue getaddressesbyaccount(const JSONRPCRequest& request)
     return ret;
 }
 
-static void SendMoneyToScript(const CScript &scriptPubKey, CAmount nValue, bool fSubtractFeeFromAmount, CWalletTx& wtxNew)
+static void SendMoneyToScript(CWallet* pwallet, const CScript &scriptPubKey, CAmount nValue, bool fSubtractFeeFromAmount, CWalletTx& wtxNew)
 {
-    CWallet * const pwallet = GetWalletForJSONRPCRequest(request);
+/*    CWallet * const pwallet = GetWalletForJSONRPCRequest(request);
     if (!EnsureWalletIsAvailable(pwallet, request.fHelp)) {
         return NullUniValue;
     }
+*/
     CAmount curBalance = pwallet->GetBalance();
 
     // Check amount
@@ -429,7 +430,7 @@ static void SendMoneyToScript(const CScript &scriptPubKey, CAmount nValue, bool 
     int nChangePosRet = -1;
     CRecipient recipient = {scriptPubKey, nValue, fSubtractFeeFromAmount};
     vecSend.push_back(recipient);
-    if (!pwallet->CreateTransaction(vecSend, wtxNew, reservekey, nFeeRequired, nChangePosRet, strError)) {
+   if (!pwallet->CreateTransaction(vecSend, wtxNew, reservekey, nFeeRequired, nChangePosRet, strError, coin_control)) {
         if (!fSubtractFeeFromAmount && nValue + nFeeRequired > pwallet->GetBalance())
             strError = strprintf("Error: This transaction requires a transaction fee of at least %s because of its amount, complexity, or use of recently received funds!", FormatMoney(nFeeRequired));
         throw JSONRPCError(RPC_WALLET_ERROR, strError);
@@ -3308,7 +3309,7 @@ UniValue fundmining(const JSONRPCRequest& request)
     EnsureWalletIsUnlocked(pwallet);
 
     CWalletTx wtx;
-    SendMoneyToScript(CScript() << OP_RETURN, nAmount, false, wtx);
+    SendMoneyToScript(pwallet, CScript() << OP_RETURN, nAmount, false, wtx);
 
     return wtx.GetHash().GetHex();
 }
