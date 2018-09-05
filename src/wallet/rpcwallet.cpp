@@ -403,7 +403,7 @@ UniValue getaddressesbyaccount(const JSONRPCRequest& request)
     return ret;
 }
 
-static void SendMoneyToScript(CWallet* pwallet, const CScript &scriptPubKey, CAmount nValue, bool fSubtractFeeFromAmount, CWalletTx& wtxNew)
+static void SendMoneyToScript(CWallet* pwallet, const CScript &scriptPubKey, CAmount nValue, bool fSubtractFeeFromAmount, CWalletTx& wtxNew, const CCoinControl& coin_control)
 {
 /*    CWallet * const pwallet = GetWalletForJSONRPCRequest(request);
     if (!EnsureWalletIsAvailable(pwallet, request.fHelp)) {
@@ -430,6 +430,22 @@ static void SendMoneyToScript(CWallet* pwallet, const CScript &scriptPubKey, CAm
     int nChangePosRet = -1;
     CRecipient recipient = {scriptPubKey, nValue, fSubtractFeeFromAmount};
     vecSend.push_back(recipient);
+//
+    CCoinControl coin_control;
+    if (!request.params[5].isNull()) {
+        coin_control.signalRbf = request.params[5].get_bool();
+    }
+
+    if (!request.params[6].isNull()) {
+        coin_control.m_confirm_target = ParseConfirmTarget(request.params[6]);
+    }
+
+    if (!request.params[7].isNull()) {
+        if (!FeeModeFromString(request.params[7].get_str(), coin_control.m_fee_mode)) {
+            throw JSONRPCError(RPC_INVALID_PARAMETER, "Invalid estimate_mode parameter");
+        }
+    }
+//
    if (!pwallet->CreateTransaction(vecSend, wtxNew, reservekey, nFeeRequired, nChangePosRet, strError, coin_control)) {
         if (!fSubtractFeeFromAmount && nValue + nFeeRequired > pwallet->GetBalance())
             strError = strprintf("Error: This transaction requires a transaction fee of at least %s because of its amount, complexity, or use of recently received funds!", FormatMoney(nFeeRequired));
