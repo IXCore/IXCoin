@@ -3253,7 +3253,7 @@ UniValue fundmining(const JSONRPCRequest& request)
         throw std::runtime_error(
             "fundmining amount\n"
             "\nSend an amount to the mining fund.\n"
-            + HelpRequiringPassphrase() +
+            + HelpRequiringPassphrase(pwallet) +
             "\nArguments:\n"
             "1. \"amount\"      (numeric or string, required) The amount in " + CURRENCY_UNIT + " to send. eg 0.1\n"
             "\nResult:\n"
@@ -3266,7 +3266,7 @@ UniValue fundmining(const JSONRPCRequest& request)
     LOCK2(cs_main, pwallet->cs_wallet);
 
     // Amount
-    CAmount nAmount = AmountFromValue(params[0]);
+    CAmount nAmount = AmountFromValue(request.params[0]);
     if (nAmount <= 0)
         throw JSONRPCError(RPC_TYPE_ERROR, "Invalid amount for send");
 

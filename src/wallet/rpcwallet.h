@@ -7,8 +7,10 @@
 
 #include <string>
 
+class CCoinControl;
 class CRPCTable;
 class CWallet;
+class CWalletTx;
 class JSONRPCRequest;
 
 void RegisterWalletRPCCommands(CRPCTable &t);
@@ -24,5 +26,10 @@ CWallet *GetWalletForJSONRPCRequest(const JSONRPCRequest& request);
 std::string HelpRequiringPassphrase(CWallet *);
 void EnsureWalletIsUnlocked(CWallet *);
 bool EnsureWalletIsAvailable(CWallet *, bool avoidException);
+CTransactionRef SendMoneyToScript(CWallet* pwallet, const CScript& scriptPubKey,
+                                  const CTxIn* withInput, CAmount nValue,
+                                  bool fSubtractFeeFromAmount,
+                                  const CCoinControl& coin_control,
+                                  mapValue_t mapValue);
 
 #endif //BITCOIN_WALLET_RPCWALLET_H
