@@ -553,7 +553,7 @@ BOOST_FIXTURE_TEST_CASE (auxpow_miner_blockRegeneration, TestChain100Setup)
   mtx.vout.emplace_back (1234, scriptPubKey);
   {
     LOCK (mempool.cs);
-    mempool.addUnchecked (entry.FromTx (mtx));
+    mempool.addUnchecked (hash1, entry.FromTx (mtx));
   }
 
   /* We should still get back the cached block, for now.  */
