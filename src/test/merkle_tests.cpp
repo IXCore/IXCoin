@@ -116,7 +116,8 @@ static void MerkleComputation(const std::vector<uint256>& leaves, uint256* proot
     return ret;
 }*/
 
-std::vector<uint256> BlockMerkleBranch(const CBlock& block, uint32_t position)
+//std::vector<uint256> BlockMerkleBranch(const CBlock& block, uint32_t position)
+std::vector<uint256> BlockMerkleBranch(const CBlock& block, int position)
 {
     std::vector<uint256> leaves;
     leaves.resize(block.vtx.size());
@@ -235,7 +236,7 @@ BOOST_AUTO_TEST_CASE(merkle_test)
             if (mutate == 0) {
                 for (int loop = 0; loop < std::min(ntx, 16); loop++) {
                     // If ntx <= 16, try all branches. Otherwise, try 16 random ones.
-                    uint32_t mtx = loop;
+                    int mtx = loop;
                     if (ntx > 16) {
                         mtx = InsecureRandRange(ntx);
                     }
