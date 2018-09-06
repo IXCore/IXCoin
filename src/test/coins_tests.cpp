@@ -53,7 +53,8 @@ public:
 
     uint256 GetBestBlock() const override { return hashBestBlock_; }
 
-    bool BatchWrite(CCoinsMap& mapCoins, const uint256& hashBlock, const CNameCache &names) override
+//    bool BatchWrite(CCoinsMap& mapCoins, const uint256& hashBlock, const CNameCache &names) override
+    bool BatchWrite(CCoinsMap& mapCoins, const uint256& hashBlock, const CNameCache &names)
     {
         for (CCoinsMap::iterator it = mapCoins.begin(); it != mapCoins.end(); ) {
             if (it->second.flags & CCoinsCacheEntry::DIRTY) {
@@ -150,7 +151,8 @@ BOOST_AUTO_TEST_CASE(coins_cache_simulation_test)
             bool test_havecoin_after = InsecureRandBits(2) == 0;
 
             bool result_havecoin = test_havecoin_before ? stack.back()->HaveCoin(COutPoint(txid, 0)) : false;
-            const Coin& entry = (InsecureRandRange(500) == 0) ? AccessByTxid(*stack.back(), txid) : stack.back()->AccessCoin(COutPoint(txid, 0));
+            Coin& entry = (InsecureRandRange(500) == 0) ? AccessByTxid(*stack.back(), txid) : stack.back()->AccessCoin(COutPoint(txid, 0));
+//            const Coin& entry = (InsecureRandRange(500) == 0) ? AccessByTxid(*stack.back(), txid) : stack.back()->AccessCoin(COutPoint(txid, 0));
             BOOST_CHECK(coin == entry);
             BOOST_CHECK(!test_havecoin_before || result_havecoin == !entry.IsSpent());
 
