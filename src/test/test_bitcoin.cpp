@@ -8,15 +8,14 @@
 #include <consensus/consensus.h>
 #include <consensus/validation.h>
 #include <crypto/sha256.h>
+#include <validation.h>
 #include <miner.h>
 #include <net_processing.h>
-#include <pow.h>
-#include <rpc/register.h>
-#include <rpc/server.h>
-#include <script/sigcache.h>
-#include <streams.h>
 #include <ui_interface.h>
-#include <validation.h>
+#include <streams.h>
+#include <rpc/server.h>
+#include <rpc/register.h>
+#include <script/sigcache.h>
 
 const std::function<std::string(const char*)> G_TRANSLATION_FUN = nullptr;
 
@@ -50,16 +49,17 @@ std::ostream& operator<<(std::ostream& os, const uint256& num)
 BasicTestingSetup::BasicTestingSetup(const std::string& chainName)
     : m_path_root(fs::temp_directory_path() / "test_bitcoin" / strprintf("%lu_%i", (unsigned long)GetTime(), (int)(InsecureRandRange(1 << 30))))
 {
-    SHA256AutoDetect();
-    RandomInit();
-    ECC_Start();
-    SetupEnvironment();
-    SetupNetworking();
-    InitSignatureCache();
-    InitScriptExecutionCache();
-    fCheckBlockIndex = true;
-    SelectParams(chainName);
-    noui_connect();
+        SHA256AutoDetect();
+        RandomInit();
+        ECC_Start();
+        SetupEnvironment();
+        SetupNetworking();
+        InitSignatureCache();
+        InitScriptExecutionCache();
+        fPrintToDebugLog = false; // don't want to write to debug.log file
+        fCheckBlockIndex = true;
+        SelectParams(chainName);
+        noui_connect();
 }
 
 BasicTestingSetup::~BasicTestingSetup()
@@ -85,9 +85,9 @@ TestingSetup::TestingSetup(const std::string& chainName) : BasicTestingSetup(cha
 
         RegisterAllCoreRPCCommands(tableRPC);
         ClearDatadirCache();
-//        pathTemp = fs::temp_directory_path() / strprintf("test_bitcoin_%lu_%i", (unsigned long)GetTime(), (int)(InsecureRandRange(100000)));
-//        fs::create_directories(pathTemp);
-//        gArgs.ForceSetArg("-datadir", pathTemp.string());
+        pathTemp = fs::temp_directory_path() / strprintf("test_bitcoin_%lu_%i", (unsigned long)GetTime(), (int)(InsecureRandRange(100000)));
+        fs::create_directories(pathTemp);
+        gArgs.ForceSetArg("-datadir", pathTemp.string());
 
         // We have to run a scheduler thread to prevent ActivateBestChain
         // from blocking due to queue overrun.
@@ -134,7 +134,7 @@ TestChain100Setup::TestChain100Setup() : TestingSetup(CBaseChainParams::REGTEST)
 {
     // CreateAndProcessBlock() does not support building SegWit blocks, so don't activate in these tests.
     // TODO: fix the code to support SegWit blocks.
-    TurnOffSegwitForUnitTests();
+    UpdateVersionBitsParameters(Consensus::DEPLOYMENT_SEGWIT, 0, Consensus::BIP9Deployment::NO_TIMEOUT);
     // Generate a 100-block chain:
     coinbaseKey.MakeNewKey(true);
     CScript scriptPubKey = CScript() <<  ToByteVector(coinbaseKey.GetPubKey()) << OP_CHECKSIG;
