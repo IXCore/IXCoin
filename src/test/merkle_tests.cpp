@@ -235,7 +235,7 @@ BOOST_AUTO_TEST_CASE(merkle_test)
             if (mutate == 0) {
                 for (int loop = 0; loop < std::min(ntx, 16); loop++) {
                     // If ntx <= 16, try all branches. Otherwise, try 16 random ones.
-                    int mtx = loop;
+                    uint32_t mtx = loop;
                     if (ntx > 16) {
                         mtx = InsecureRandRange(ntx);
                     }
