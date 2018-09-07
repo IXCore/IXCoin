@@ -483,10 +483,10 @@ BOOST_FIXTURE_TEST_CASE(importwallet_rescan, TestChain100Setup)
 
         JSONRPCRequest request;
         request.params.setArray();
-        request.params.push_back((pathTemp / "wallet.backup").string());
-        vpwallets.insert(vpwallets.begin(), &wallet);
+        request.params.push_back(backup_file);
+        AddWallet(wallet);
         ::dumpwallet(request);
-        RemoveWallet(wallet);
+//        RemoveWallet(wallet);
     }
 
     // Call importwallet RPC and verify all blocks with timestamps >= BLOCK_TIME
@@ -497,9 +497,10 @@ BOOST_FIXTURE_TEST_CASE(importwallet_rescan, TestChain100Setup)
         JSONRPCRequest request;
         request.params.setArray();
         request.params.push_back(backup_file);
-        AddWallet(wallet);
+//        AddWallet(wallet);
+        vpwallets[0] = &wallet;
         ::importwallet(request);
-        RemoveWallet(wallet);
+//        RemoveWallet(wallet);
 
         LOCK(wallet->cs_wallet);
         BOOST_CHECK_EQUAL(wallet->mapWallet.size(), 3U);
@@ -524,7 +525,8 @@ BOOST_FIXTURE_TEST_CASE(importwallet_rescan, TestChain100Setup)
 BOOST_FIXTURE_TEST_CASE(coin_mark_dirty_immature_credit, TestChain100Setup)
 {
     CWallet wallet;
-    CWalletTx wtx(&wallet, MakeTransactionRef(coinbaseTxns.back()));
+//    CWalletTx wtx(&wallet, MakeTransactionRef(coinbaseTxns.back()));
+    CWalletTx wtx(&wallet, m_coinbase_txns.back());
     LOCK2(cs_main, wallet.cs_wallet);
     wtx.hashBlock = chainActive.Tip()->GetBlockHash();
     wtx.nIndex = 0;
