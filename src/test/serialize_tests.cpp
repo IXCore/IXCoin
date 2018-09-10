@@ -353,8 +353,8 @@ BOOST_AUTO_TEST_CASE(class_methods)
     CTransactionRef tx_ref{MakeTransactionRef(txval)};
 //    CSerializeMethodsTestSingle methodtest1(intval, boolval, stringval, charstrval, tx_ref);
 //    CSerializeMethodsTestMany methodtest2(intval, boolval, stringval, charstrval, tx_ref);
-    CSerializeMethodsTestSingle methodtest1(intval, boolval, stringval, charstrval, tx_val);
-    CSerializeMethodsTestMany methodtest2(intval, boolval, stringval, charstrval, tx_val);
+    CSerializeMethodsTestSingle methodtest1(intval, boolval, stringval, charstrval, txval);
+    CSerializeMethodsTestMany methodtest2(intval, boolval, stringval, charstrval, txval);
     CSerializeMethodsTestSingle methodtest3;
     CSerializeMethodsTestMany methodtest4;
     CDataStream ss(SER_DISK, PROTOCOL_VERSION);
