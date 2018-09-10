@@ -1,6 +1,5 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2017 The Bitcoin Core developers
-// Copyright (c) 2011-2018 The iXcoin Core developers
+// Copyright (c) 2009-2018 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -29,14 +28,6 @@ public:
     // auxpow (if this is a merge-minded block)
     std::shared_ptr<CAuxPow> auxpow;
 
-    // header
-    int32_t nVersion;
-    uint256 hashPrevBlock;
-    uint256 hashMerkleRoot;
-    uint32_t nTime;
-    uint32_t nBits;
-    uint32_t nNonce;
-
     CBlockHeader()
     {
         SetNull();
@@ -46,56 +37,29 @@ public:
 
     template <typename Stream, typename Operation>
     inline void SerializationOp(Stream& s, Operation ser_action) {
-        READWRITE(*(CPureBlockHeader*)this);
-        nVersion = this->GetBaseVersion();
+        READWRITEAS(CPureBlockHeader, *this);
 
         if (this->IsAuxpow())
         {
             if (ser_action.ForRead())
-                auxpow.reset (new CAuxPow());
-            assert(auxpow);
+                auxpow = std::make_shared<CAuxPow>();
+            assert(auxpow != nullptr);
             READWRITE(*auxpow);
         } else if (ser_action.ForRead())
             auxpow.reset();
-        READWRITE(this->nVersion);
-        READWRITE(hashPrevBlock);
-        READWRITE(hashMerkleRoot);
-        READWRITE(nTime);
-        READWRITE(nBits);
-        READWRITE(nNonce);
     }
 
     void SetNull()
     {
         CPureBlockHeader::SetNull();
         auxpow.reset();
-        nVersion = 0;
-        hashPrevBlock.SetNull();
-        hashMerkleRoot.SetNull();
-        nTime = 0;
-        nBits = 0;
-        nNonce = 0;
     }
 
     /**
      * Set the block's auxpow (or unset it).  This takes care of updating
      * the version accordingly.
-     * @param apow Pointer to the auxpow to use or NULL.
      */
-     void SetAuxpow (std::unique_ptr<CAuxPow> apow);  
-    //void SetAuxpow (CAuxPow* apow);
-
-    bool IsNull() const
-    {
-        return (nBits == 0);
-    }
-
-    uint256 GetHash() const;
-
-    int64_t GetBlockTime() const
-    {
-        return (int64_t)nTime;
-    }
+    void SetAuxpow (std::unique_ptr<CAuxPow> apow);
 };
 
 
@@ -116,14 +80,14 @@ public:
     CBlock(const CBlockHeader &header)
     {
         SetNull();
-        *((CBlockHeader*)this) = header;
+        *(static_cast<CBlockHeader*>(this)) = header;
     }
 
     ADD_SERIALIZE_METHODS;
 
     template <typename Stream, typename Operation>
     inline void SerializationOp(Stream& s, Operation ser_action) {
-        READWRITE(*(CBlockHeader*)this);
+        READWRITEAS(CBlockHeader, *this);
         READWRITE(vtx);
     }
 
@@ -165,8 +129,6 @@ struct CBlockLocator
     ADD_SERIALIZE_METHODS;
 
     template <typename Stream, typename Operation>
-//    inline void SerializationOp(Stream& s, Operation ser_action, int nType, int nVersion) {
-//        if (!(nType & SER_GETHASH))
     inline void SerializationOp(Stream& s, Operation ser_action) {
         int nVersion = s.GetVersion();
         if (!(s.GetType() & SER_GETHASH))
@@ -184,8 +146,5 @@ struct CBlockLocator
         return vHave.empty();
     }
 };
-
-/** Compute the consensus-critical block weight (see BIP 141). */
-//int64_t GetBlockWeight(const CBlock& tx);
 
 #endif // BITCOIN_PRIMITIVES_BLOCK_H
