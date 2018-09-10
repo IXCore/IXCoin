@@ -908,17 +908,20 @@ void SerializeMany(Stream& s)
 {
 }
 
-template<typename Stream, typename Arg>
+/* template<typename Stream, typename Arg>
 void SerializeMany(Stream& s, Arg&& arg)
 {
     ::Serialize(s, std::forward<Arg>(arg));
-}
+}*/
 
 template<typename Stream, typename Arg, typename... Args>
-void SerializeMany(Stream& s, Arg&& arg, Args&&... args)
+//void SerializeMany(Stream& s, Arg&& arg, Args&&... args)
+void SerializeMany(Stream& s, const Arg& arg, const Args&... args)
 {
-    ::Serialize(s, std::forward<Arg>(arg));
-    ::SerializeMany(s, std::forward<Args>(args)...);
+//    ::Serialize(s, std::forward<Arg>(arg));
+//    ::SerializeMany(s, std::forward<Args>(args)...);
+    ::Serialize(s, arg);
+    ::SerializeMany(s, args...);
 }
 
 template<typename Stream>
