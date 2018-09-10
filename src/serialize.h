@@ -1,5 +1,5 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
-// Copyright (c) 2009-2017 The Bitcoin Core developers
+// Copyright (c) 2009-2018 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -22,6 +22,7 @@
 #include <vector>
 
 #include <prevector.h>
+#include <span.h>
 
 static const unsigned int MAX_SIZE = 0x02000000;
 
@@ -76,6 +77,11 @@ template<typename Stream> inline void ser_writedata8(Stream &s, uint8_t obj)
 template<typename Stream> inline void ser_writedata16(Stream &s, uint16_t obj)
 {
     obj = htole16(obj);
+    s.write((char*)&obj, 2);
+}
+template<typename Stream> inline void ser_writedata16be(Stream &s, uint16_t obj)
+{
+    obj = htobe16(obj);
     s.write((char*)&obj, 2);
 }
 template<typename Stream> inline void ser_writedata32(Stream &s, uint32_t obj)
