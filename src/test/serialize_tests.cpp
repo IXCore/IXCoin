@@ -344,10 +344,11 @@ BOOST_AUTO_TEST_CASE(class_methods)
     int intval(100);
     bool boolval(true);
     std::string stringval("testing");
-    const char* charstrval("testing charstr");
+    const char charstrval[16] = "testing charstr";
     CMutableTransaction txval;
-    CSerializeMethodsTestSingle methodtest1(intval, boolval, stringval, charstrval, txval);
-    CSerializeMethodsTestMany methodtest2(intval, boolval, stringval, charstrval, txval);
+    CTransactionRef tx_ref{MakeTransactionRef(txval)};
+    CSerializeMethodsTestSingle methodtest1(intval, boolval, stringval, charstrval, tx_ref);
+    CSerializeMethodsTestMany methodtest2(intval, boolval, stringval, charstrval, tx_ref);
     CSerializeMethodsTestSingle methodtest3;
     CSerializeMethodsTestMany methodtest4;
     CDataStream ss(SER_DISK, PROTOCOL_VERSION);
@@ -360,7 +361,7 @@ BOOST_AUTO_TEST_CASE(class_methods)
     BOOST_CHECK(methodtest2 == methodtest3);
     BOOST_CHECK(methodtest3 == methodtest4);
 
-    CDataStream ss2(SER_DISK, PROTOCOL_VERSION, intval, boolval, stringval, FLATDATA(charstrval), txval);
+    CDataStream ss2(SER_DISK, PROTOCOL_VERSION, intval, boolval, stringval, charstrval, txval);
     ss2 >> methodtest3;
     BOOST_CHECK(methodtest3 == methodtest4);
 }
