@@ -1005,7 +1005,8 @@ UniValue createauxblock(const JSONRPCRequest& request)
         throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY,
                            "Error: Invalid coinbase payout address");
     }
-    const CScript scriptPubKey = GetScriptForDestination(coinbaseScript);
+//    const CScript scriptPubKey = GetScriptForDestination(coinbaseScript);
+    const CScript& scriptPubKey = GetScriptForDestination(coinbaseScript);
 
     return g_auxpow_miner->createAuxBlock(scriptPubKey);
 }
