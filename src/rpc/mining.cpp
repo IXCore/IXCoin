@@ -973,7 +973,7 @@ static UniValue estimaterawfee(const JSONRPCRequest& request)
 /* ************************************************************************** */
 /* Merge mining.  */
 
-std::unique_ptr<AuxpowMiner> g_auxpow_miner;
+//std::unique_ptr<AuxpowMiner> g_auxpow_miner;
 
 UniValue createauxblock(const JSONRPCRequest& request)
 {
