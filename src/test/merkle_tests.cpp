@@ -111,14 +111,13 @@ static void MerkleComputation(const std::vector<uint256>& leaves, uint256* proot
     if (proot) *proot = h;
 }
 
-/*static std::vector<uint256> ComputeMerkleBranch(const std::vector<uint256>& leaves, uint32_t position) {
+static std::vector<uint256> ComputeMerkleBranch(const std::vector<uint256>& leaves, uint32_t position) {
     std::vector<uint256> ret;
     MerkleComputation(leaves, nullptr, nullptr, position, &ret);
     return ret;
-}*/
+}
 
-//std::vector<uint256> BlockMerkleBranch(const CBlock& block, uint32_t position)
-std::vector<uint256> BlockMerkleBranch(const CBlock& block, int position)
+std::vector<uint256> BlockMerkleBranch(const CBlock& block, uint32_t position)
 {
     std::vector<uint256> leaves;
     leaves.resize(block.vtx.size());
