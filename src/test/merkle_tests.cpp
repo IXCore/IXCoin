@@ -117,8 +117,8 @@ static void MerkleComputation(const std::vector<uint256>& leaves, uint256* proot
     return ret;
 }*/
 
-std::vector<uint256> BlockMerkleBranch(const CBlock& block, uint32_t position)
-//std::vector<uint256> BlockMerkleBranch(const CBlock& block, int position)
+//std::vector<uint256> BlockMerkleBranch(const CBlock& block, uint32_t position)
+std::vector<uint256> BlockMerkleBranch(const CBlock& block, int position)
 {
     std::vector<uint256> leaves;
     leaves.resize(block.vtx.size());
