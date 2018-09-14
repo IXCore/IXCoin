@@ -68,11 +68,11 @@ uint256 ComputeMerkleRoot(std::vector<uint256> hashes, bool* mutated) {
     return hash;
 }*/
 
-std::vector<uint256> ComputeMerkleBranch(const std::vector<uint256>& leaves, uint32_t position) {
+/*std::vector<uint256> ComputeMerkleBranch(const std::vector<uint256>& leaves, uint32_t position) {
     std::vector<uint256> ret;
     MerkleComputation(leaves, nullptr, nullptr, position, &ret);
     return ret;
-}
+}*/
 
 uint256 ComputeMerkleRootFromBranch(const uint256& leaf, const std::vector<uint256>& vMerkleBranch, uint32_t nIndex) {
     uint256 hash = leaf;
