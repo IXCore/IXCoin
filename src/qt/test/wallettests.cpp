@@ -166,29 +166,26 @@ void TestGUI()
     std::unique_ptr<CWalletDBWrapper> dbw(new CWalletDBWrapper(&bitdb, "wallet_test.dat"));
     CWallet wallet(std::move(dbw));
     bool firstRun;
-    wallet->LoadWallet(firstRun);
+    wallet.LoadWallet(firstRun);
     {
-        LOCK(wallet->cs_wallet);
-        wallet->SetAddressBook(GetDestinationForKey(test.coinbaseKey.GetPubKey(), wallet->m_default_address_type), "", "receive");
-        wallet->AddKeyPubKey(test.coinbaseKey, test.coinbaseKey.GetPubKey());
+        LOCK(wallet.cs_wallet);
+        wallet.SetAddressBook(GetDestinationForKey(test.coinbaseKey.GetPubKey(), wallet.m_default_address_type), "", "receive");
+        wallet.AddKeyPubKey(test.coinbaseKey, test.coinbaseKey.GetPubKey());
     }
     {
         LOCK(cs_main);
-        WalletRescanReserver reserver(wallet.get());
+        WalletRescanReserver reserver(&wallet);
         reserver.reserve();
-        wallet->ScanForWalletTransactions(chainActive.Genesis(), nullptr, reserver, true);
+        wallet.ScanForWalletTransactions(chainActive.Genesis(), nullptr, reserver, true);
     }
-    wallet->SetBroadcastTransactions(true);
+    wallet.SetBroadcastTransactions(true);
 
     // Create widgets for sending coins and listing transactions.
     std::unique_ptr<const PlatformStyle> platformStyle(PlatformStyle::instantiate("other"));
     SendCoinsDialog sendCoinsDialog(platformStyle.get());
     TransactionView transactionView(platformStyle.get());
-    auto node = interfaces::MakeNode();
-    OptionsModel optionsModel(*node);
-    AddWallet(wallet);
-    WalletModel walletModel(std::move(node->getWallets().back()), *node, platformStyle.get(), &optionsModel);
-    RemoveWallet(wallet);
+    OptionsModel optionsModel;
+    WalletModel walletModel(platformStyle.get(), &wallet, &optionsModel);
     sendCoinsDialog.setModel(&walletModel);
     transactionView.setModel(&walletModel);
 
