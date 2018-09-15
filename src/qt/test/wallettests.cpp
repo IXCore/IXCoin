@@ -162,7 +162,9 @@ void TestGUI()
     for (int i = 0; i < 5; ++i) {
         test.CreateAndProcessBlock({}, GetScriptForRawPubKey(test.coinbaseKey.GetPubKey()));
     }
-    std::shared_ptr<CWallet> wallet = std::make_shared<CWallet>("mock", WalletDatabase::CreateMock());
+    bitdb.MakeMock();
+    std::unique_ptr<CWalletDBWrapper> dbw(new CWalletDBWrapper(&bitdb, "wallet_test.dat"));
+    CWallet wallet(std::move(dbw));
     bool firstRun;
     wallet->LoadWallet(firstRun);
     {
