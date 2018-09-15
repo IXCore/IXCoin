@@ -154,8 +154,8 @@ void BumpFee(TransactionView& view, const uint256& txid, bool expectDisabled, st
 //     src/qt/test/test_bitcoin-qt -platform cocoa    # macOS
 void TestGUI()
 {
-//    g_address_type = OUTPUT_TYPE_P2SH_SEGWIT;
-//    g_change_type = OUTPUT_TYPE_P2SH_SEGWIT;
+    g_address_type = OUTPUT_TYPE_P2SH_SEGWIT;
+    g_change_type = OUTPUT_TYPE_P2SH_SEGWIT;
 
     // Set up wallet and chain with 105 blocks (5 mature blocks for spending).
     TestChain100Setup test;
@@ -169,7 +169,7 @@ void TestGUI()
     wallet.LoadWallet(firstRun);
     {
         LOCK(wallet.cs_wallet);
-        wallet.SetAddressBook(GetDestinationForKey(test.coinbaseKey.GetPubKey(), wallet.m_default_address_type), "", "receive");
+        wallet.SetAddressBook(GetDestinationForKey(test.coinbaseKey.GetPubKey(), g_address_type), "", "receive");
         wallet.AddKeyPubKey(test.coinbaseKey, test.coinbaseKey.GetPubKey());
     }
     {
@@ -192,8 +192,8 @@ void TestGUI()
     // Send two transactions, and verify they are added to transaction list.
     TransactionTableModel* transactionTableModel = walletModel.getTransactionTableModel();
     QCOMPARE(transactionTableModel->rowCount({}), 105);
-    uint256 txid1 = SendCoins(*wallet.get(), sendCoinsDialog, CKeyID(), 5 * COIN, false /* rbf */);
-    uint256 txid2 = SendCoins(*wallet.get(), sendCoinsDialog, CKeyID(), 10 * COIN, true /* rbf */);
+    uint256 txid1 = SendCoins(wallet, sendCoinsDialog, CKeyID(), 5 * COIN, false /* rbf */);
+    uint256 txid2 = SendCoins(wallet, sendCoinsDialog, CKeyID(), 10 * COIN, true /* rbf */);
     QCOMPARE(transactionTableModel->rowCount({}), 107);
     QVERIFY(FindTx(*transactionTableModel, txid1).isValid());
     QVERIFY(FindTx(*transactionTableModel, txid2).isValid());
@@ -210,7 +210,7 @@ void TestGUI()
     QLabel* balanceLabel = overviewPage.findChild<QLabel*>("labelBalance");
     QString balanceText = balanceLabel->text();
     int unit = walletModel.getOptionsModel()->getDisplayUnit();
-    CAmount balance = walletModel.wallet().getBalance();
+    CAmount balance = walletModel.getBalance();
     QString balanceComparison = BitcoinUnits::formatWithUnit(unit, balance, false, BitcoinUnits::separatorAlways);
     QCOMPARE(balanceText, balanceComparison);
 
