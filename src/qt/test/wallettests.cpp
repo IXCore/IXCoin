@@ -133,7 +133,8 @@ void BumpFee(TransactionView& view, const uint256& txid, bool expectDisabled, st
     if (expectError.empty()) {
         ConfirmSend(&text, cancel);
     } else {
-        ConfirmMessage(&text,1);
+	ConfirmSend(&text, cancel);
+        //ConfirmMessage(&text,1);
     }
     action->trigger();
     QVERIFY(text.indexOf(QString::fromStdString(expectError)) != -1);
