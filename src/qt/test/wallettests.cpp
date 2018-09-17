@@ -37,7 +37,7 @@
 namespace
 {
 //! Press "Ok" button in message box dialog.
-/*void ConfirmMessage(QString* text = nullptr)
+void ConfirmMessage(QString* text = nullptr)
 {
     QTimer::singleShot(0, makeCallback([text](Callback* callback) {
         for (QWidget* widget : QApplication::topLevelWidgets()) {
@@ -49,7 +49,7 @@ namespace
         }
         delete callback;
     }), SLOT(call()));
-}*/
+}
 
 //! Press "Yes" or "Cancel" buttons in modal send confirmation dialog.
 void ConfirmSend(QString* text = nullptr, bool cancel = false)
